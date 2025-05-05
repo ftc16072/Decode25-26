@@ -16,4 +16,8 @@ abstract public class QQMechanism {
     public List <QQTest> getTests(){
         return tests;
     }
+    public String getName(){
+        return this.getClass().getSimpleName();
+    }
+
 }

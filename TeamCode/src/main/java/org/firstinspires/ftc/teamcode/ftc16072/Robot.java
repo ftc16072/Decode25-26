@@ -13,7 +13,7 @@ public class Robot {
     public MecanumDrive mecanumDrive = new MecanumDrive();
 
 
-    public List<QQMechanism> mechanisms = Arrays.asList(mecanumDrive);
+    private List<QQMechanism> mechanisms = Arrays.asList(mecanumDrive);
 
     public void init(HardwareMap hardwareMap) {
         for (QQMechanism mechanism : mechanisms) {
@@ -25,5 +25,8 @@ public class Robot {
         for (QQMechanism mechanism : mechanisms) {
             mechanism.update(telemetry);
         }
+    }
+    public List<QQMechanism> getMechanisms(){
+        return mechanisms;
     }
 }

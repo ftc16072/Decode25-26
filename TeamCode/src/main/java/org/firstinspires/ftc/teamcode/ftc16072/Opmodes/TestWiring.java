@@ -8,8 +8,6 @@ import java.util.List;
 
 public class TestWiring extends QQOpmode{
     List<QQMechanism> mechanismList;
-    List<QQTest> testList;
-
 
     boolean wasDown;
     boolean wasLeft;

@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import java.util.List;
 
 abstract public class QQMechanism {
-    String name;
     List <QQTest> tests;
     abstract public void init(HardwareMap hardwareMap);
     public void update(Telemetry telemetry){
@@ -16,4 +15,8 @@ abstract public class QQMechanism {
     public List <QQTest> getTests(){
         return tests;
     }
+    public String getName(){
+        return this.getClass().getSimpleName();
+    }
+
 }

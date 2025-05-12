@@ -25,10 +25,10 @@ public class MecanumDrive extends QQMechanism{
 
     @Override
     public void init(HardwareMap hardwareMap) {
-        backRight = hardwareMap.get(DcMotor.class, "back_right");
-        backLeft = hardwareMap.get(DcMotor.class, "back_left");
-        frontRight = hardwareMap.get(DcMotor.class, "front_right");
-        frontLeft = hardwareMap.get(DcMotor.class, "front_left");
+        backRight = hardwareMap.get(DcMotor.class, "back_right_motor");
+        backLeft = hardwareMap.get(DcMotor.class, "back_left_motor");
+        frontRight = hardwareMap.get(DcMotor.class, "front_right_motor");
+        frontLeft = hardwareMap.get(DcMotor.class, "front_left_motor");
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -61,10 +61,10 @@ public class MecanumDrive extends QQMechanism{
     public List<QQTest> getTests() {
 
         return Arrays.asList(
-                new TestMotor("back_right", backRight, 0.1),
-                new TestMotor("back_left",backLeft, 0.1),
-                new TestMotor("front_right",frontRight, 0.1),
-                new TestMotor("front_left", frontLeft, 0.1)
+                new TestMotor("back_right_motor", backRight, 0.1),
+                new TestMotor("back_left_motor",backLeft, 0.1),
+                new TestMotor("front_right_motor",frontRight, 0.1),
+                new TestMotor("front_left_motor", frontLeft, 0.1)
         );
     }
     public void move (double forwardSpeed, double strafeRightSpeed, double turnClockwiseSpeed){
@@ -73,7 +73,7 @@ public class MecanumDrive extends QQMechanism{
         double backRightPower = forwardSpeed + strafeRightSpeed - turnClockwiseSpeed;
         double backLeftPower = forwardSpeed - strafeRightSpeed + turnClockwiseSpeed;
 
-        setPowers(frontLeftPower,frontRightPower,backRightPower,backLeftPower);
+        setPowers(frontLeftPower,frontRightPower,backLeftPower,backRightPower);
 
     }
     public void stop(){

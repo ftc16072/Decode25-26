@@ -10,31 +10,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OdoPods extends QQMechanism{
-    GoBildaPinpointDriver leftOdoPod;
-    GoBildaPinpointDriver rightOdoPod;
+    GoBildaPinpointDriver odo;
     @Override
     public void init(HardwareMap hardwareMap) {
-        leftOdoPod = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
-        rightOdoPod = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        odo = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
     }
-    public Pose2D getLeftPose(){
-        return leftOdoPod.getPosition();
+    public Pose2D getPose(){
+        return odo.getPosition();
     }
-    public void setLeftPose(Pose2D newPose){
-        leftOdoPod.setPosition(newPose);
-    }
-    public Pose2D getRightPose(){
-        return rightOdoPod.getPosition();
-    }
-    public void setRightPose(Pose2D newPose){
-        rightOdoPod.setPosition(newPose);
+    public void setPose(Pose2D newPose){
+        odo.setPosition(newPose);
     }
     @Override
     public List<QQTest> getTests() {
-
         return Arrays.asList(
-                new TestOdo("leftOdo", leftOdoPod,leftOdoPod.getPosition()),
-                new TestOdo("rightOdo", rightOdoPod,rightOdoPod.getPosition())
+                new TestOdo("odoPods", odo)
+
         );
     }
+
 }

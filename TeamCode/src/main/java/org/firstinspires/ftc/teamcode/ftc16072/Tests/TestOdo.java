@@ -9,21 +9,22 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.GoBildaPinpointDriver;
 
 public class TestOdo extends QQTest {
     GoBildaPinpointDriver testOdo;
-    Pose2D testPose;
 
-    public TestOdo(String name, GoBildaPinpointDriver odo, Pose2D testPose) {
+    public TestOdo(String name, GoBildaPinpointDriver odo) {
         super(name);
         testOdo = odo;
-        this.testPose = testPose;
     }
 
     @Override
     public void run(Telemetry telemetry, boolean on) {
-        testOdo.setPosition(testPose);
-        Pose2D currentPose = testOdo.getPosition();
-        telemetry.addData("Odo X", currentPose.getX(DistanceUnit.MM));
-        telemetry.addData("Odo Y", currentPose.getY(DistanceUnit.MM));
-        telemetry.addData("Odo Heading", currentPose.getHeading(AngleUnit.RADIANS));
-        telemetry.update();
+        if(on){
+            testOdo.setPosition(new Pose2D(DistanceUnit.MM,0,0,AngleUnit.RADIANS,0));
+        }else{
+            Pose2D currentPose = testOdo.getPosition();
+            telemetry.addData("Odo X", currentPose.getX(DistanceUnit.MM));
+            telemetry.addData("Odo Y", currentPose.getY(DistanceUnit.MM));
+            telemetry.addData("Odo Heading", currentPose.getHeading(AngleUnit.DEGREES));
+            telemetry.update();
+        }
     }
 }

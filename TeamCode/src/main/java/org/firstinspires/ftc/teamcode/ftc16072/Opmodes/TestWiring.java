@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 
 import java.util.List;
 
-
+@TeleOp
 public class TestWiring extends QQOpmode{
     List<QQMechanism> mechanismList;
 

@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MecanumDrive extends QQMechanism{
+    public static final double TEST_SPEED = 0.2;
     DcMotor frontLeft;
     DcMotor frontRight;
     DcMotor backLeft;
@@ -61,10 +62,10 @@ public class MecanumDrive extends QQMechanism{
     public List<QQTest> getTests() {
 
         return Arrays.asList(
-                new TestMotor("back_right_motor", backRight, 0.1),
-                new TestMotor("back_left_motor",backLeft, 0.1),
-                new TestMotor("front_right_motor",frontRight, 0.1),
-                new TestMotor("front_left_motor", frontLeft, 0.1)
+                new TestMotor("back_right_motor", backRight, TEST_SPEED),
+                new TestMotor("back_left_motor",backLeft, TEST_SPEED),
+                new TestMotor("front_right_motor",frontRight, TEST_SPEED),
+                new TestMotor("front_left_motor", frontLeft, TEST_SPEED)
         );
     }
     public void move (double forwardSpeed, double strafeRightSpeed, double turnClockwiseSpeed){

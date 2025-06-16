@@ -22,5 +22,6 @@ public class TestMotor extends QQTest{
         else{
             testMotor.setPower(0);
         }
+        telemetry.addData(name, testMotor.getCurrentPosition());
     }
 }

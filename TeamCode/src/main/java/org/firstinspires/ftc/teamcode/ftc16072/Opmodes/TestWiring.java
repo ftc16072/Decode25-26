@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 @TeleOp
 public class TestWiring extends QQOpmode{
     List<QQMechanism> mechanismList;
@@ -28,7 +29,7 @@ public class TestWiring extends QQOpmode{
 
     @Override
     public void loop() {
-        super.loop();
+        // super.loop(); - // Intentionally do NOT call super.loop
          if (gamepad1.dpad_up && !wasUp){
              currentMech = currentMech - 1;
              if(currentMech < 0){

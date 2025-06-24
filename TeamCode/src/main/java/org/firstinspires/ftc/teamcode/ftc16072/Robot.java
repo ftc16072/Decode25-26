@@ -18,13 +18,11 @@ public class Robot {
     public Intake intake = new Intake();
     public Pivot pivot = new Pivot();
 
-    private List<QQMechanism> mechanisms = Arrays.asList(
-            //mecanumDrive,
-            controlHub,pivot);
     final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
-            intake  );
+            intake,
+            pivot  );
 
     public void init(HardwareMap hardwareMap) {
         for (QQMechanism mechanism : mechanisms) {

@@ -44,6 +44,9 @@ public class Pivot extends QQMechanism{
         double rotations = angle/360;
         desiredPosition  =  ((int) (rotations*TICKS_PER_SHAFT_ROTATION));
     }
+    public void manualPositionChange (int changeAmount){
+        desiredPosition += changeAmount;
+    }
 
     @Override
     public void update(Telemetry telemetry) {

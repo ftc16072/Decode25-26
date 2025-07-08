@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Pivot;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Slides;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +18,14 @@ public class Robot {
     public ControlHub controlHub = new ControlHub();
     public Intake intake = new Intake();
     public Pivot pivot = new Pivot();
+    public Slides slides = new Slides();
 
     final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
             intake,
-            pivot  );
+            pivot,
+            slides);
 
     public void init(HardwareMap hardwareMap) {
         for (QQMechanism mechanism : mechanisms) {

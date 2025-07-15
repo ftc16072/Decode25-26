@@ -14,8 +14,6 @@ public class TestLeadScrew extends QQOpmode{
             robot.leadScrew.gotoLength(250, DistanceUnit.MM);
         } else if (gamepad1.dpad_down) {
             robot.leadScrew.gotoLength(0, DistanceUnit.MM );
-        }else{
-            robot.intake.stop();
         }
     }
 }

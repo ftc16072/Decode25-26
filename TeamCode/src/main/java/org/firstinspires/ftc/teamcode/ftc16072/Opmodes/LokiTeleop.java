@@ -20,19 +20,20 @@ public class LokiTeleop extends QQOpmode{
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.SLOW);
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 //parts of gamepad can be changed later
-        if (gamepad1.a) {
-            robot.pivot.moveToSwitch();
+        if (gamepad1.y) {
+            robot.pivot.setDestinationAngleDegrees(35);
         } else if (gamepad1.dpad_up){
             robot.pivot.manualPositionChange(MANUAL_CHANGE);
         } else if (gamepad1.dpad_down){
             robot.pivot.manualPositionChange(-MANUAL_CHANGE);
         }
 
-        if (gamepad1.right_trigger > TRIGGER_THRESHOLD) {
+        if (gamepad1.a) {
             robot.intake.intake();
-        } else if (gamepad1.right_bumper) {
+        } else if (gamepad1.x) {
             robot.intake.outtake();
         } else robot.intake.stop();
+
 //once code for slides is written teleop code has to be written for them too
     }
 }

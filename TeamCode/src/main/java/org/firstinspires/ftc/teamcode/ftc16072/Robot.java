@@ -21,11 +21,11 @@ public class Robot {
     public LeadScrew leadScrew = new LeadScrew();
 
     final private List<QQMechanism> mechanisms = Arrays.asList(
-           // mecanumDrive,
+            mecanumDrive,
             controlHub,
-            // intake,
-            leadScrew
-            //pivot
+             intake,
+            leadScrew,
+             pivot
             );
 
     public void init(HardwareMap hardwareMap) {

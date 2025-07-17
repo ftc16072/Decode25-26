@@ -50,6 +50,7 @@ public class Pivot extends QQMechanism{
 
     @Override
     public void update(Telemetry telemetry) {
+/*
         double kP = .0005;
         super.update(telemetry);
 
@@ -68,10 +69,19 @@ public class Pivot extends QQMechanism{
         telemetry.addData("power",power);
         telemetry.addData("current_pos", currentPosition);
         telemetry.addData("desrired", desiredPosition);
+
+ */
     }
 
     public void stop (){
-        desiredPosition = pivot.getCurrentPosition();
+        //desiredPosition = pivot.getCurrentPosition();
+        pivot.setPower(0);
+    }
+    public void up (){
+        pivot.setPower(1.0);
+    }
+    public void down (){
+        pivot.setPower(-1.0);
     }
 
 }

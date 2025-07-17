@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
@@ -20,20 +21,37 @@ public class LokiTeleop extends QQOpmode{
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.SLOW);
         } else robot.mecanumDrive.setSpeed(MecanumDrive.Speed.NORMAL);
 //parts of gamepad can be changed later
-        if (gamepad1.y) {
-            robot.pivot.setDestinationAngleDegrees(35);
-        } else if (gamepad1.dpad_up){
-            robot.pivot.manualPositionChange(MANUAL_CHANGE);
+
+        if (gamepad1.dpad_up){
+            robot.pivot.up();
         } else if (gamepad1.dpad_down){
-            robot.pivot.manualPositionChange(-MANUAL_CHANGE);
+            robot.pivot.down();
+        } else {
+            robot.pivot.stop();
         }
 
         if (gamepad1.a) {
             robot.intake.intake();
         } else if (gamepad1.x) {
             robot.intake.outtake();
-        } else robot.intake.stop();
+        } else{
+            robot.intake.slow();
+        }
 
+        if (gamepad1.dpad_left){
+            robot.leadScrew.in();
+        } else if (gamepad1.dpad_right){
+            robot.leadScrew.out();
+        } else {
+            robot.leadScrew.stop();
+        }
+/*
+        if(gamepad1.right_trigger > TRIGGER_THRESHOLD){
+            robot.leadScrew.gotoLength(250, DistanceUnit.MM);
+        } else if (gamepad1.right_bumper) {
+            robot.leadScrew.gotoLength(0, DistanceUnit.MM );
+        }
+*/
 //once code for slides is written teleop code has to be written for them too
     }
 }

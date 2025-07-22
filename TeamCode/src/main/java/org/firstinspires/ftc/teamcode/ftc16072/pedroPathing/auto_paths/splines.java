@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Opmodes.QQOpmode;
 import org.firstinspires.ftc.teamcode.ftc16072.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.ftc16072.pedroPathing.constants.LConstants;
 
-@TeleOp
+//@TeleOp
 public class splines extends QQOpmode {
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;

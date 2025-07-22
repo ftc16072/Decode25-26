@@ -44,6 +44,8 @@ public class LokiTeleop extends QQOpmode{
             robot.leadScrew.out();
         } else {
             robot.leadScrew.stop();
+        } if(robot.leadScrew.limitswitchpressed()){
+            robot.leadScrew.resetencoder();
         }
 /*
         if(gamepad1.right_trigger > TRIGGER_THRESHOLD){

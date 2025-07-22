@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Opmodes.QQOpmode;
 
-@TeleOp
+//@TeleOp
 public class Three_Sample_2_5_Randomization extends QQOpmode {
     public static PathBuilder builder = new PathBuilder();
 

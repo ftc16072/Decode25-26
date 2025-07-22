@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestMotor;
@@ -10,8 +11,10 @@ import java.util.Arrays;
 
 public class LeadScrew extends QQMechanism {
     DcMotor leadScrewMotor;
+    TouchSensor leadScrewResetSwitch;
     final double LEAD_SCREW_PITCH_MM = 2;
     final double LEAD_SCREW_PULSES_PER_ROTATION = 145.1; // 1150 RPM from GoBilda
+    final double MAX_EXTENSION = 1000;//NEEDS TO BE TUNED
 
     public LeadScrew() {
 
@@ -20,6 +23,7 @@ public class LeadScrew extends QQMechanism {
 
     @Override
     public void init(HardwareMap hardwareMap) {
+        leadScrewResetSwitch = hardwareMap.get(TouchSensor.class, "lead screw reset switch");
         leadScrewMotor = hardwareMap.get(DcMotor.class, "lead_screw_motor");
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         tests = Arrays.asList(
@@ -36,13 +40,13 @@ public class LeadScrew extends QQMechanism {
         leadScrewMotor.setTargetPosition(ticks);
         leadScrewMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
-    public void in(){
-        leadScrewMotor.setPower(-1.0);
+    public boolean limitswitchpressed(){
+        return leadScrewResetSwitch.isPressed();
     }
-    public void out(){
-        leadScrewMotor.setPower(1.0);
+    public void resetencoder(){
+        leadScrewMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leadScrewMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void stop(){
-        leadScrewMotor.setPower(0);
-    }
-}
+    public void in(){if (leadScrewMotor.getCurrentPosition()>=0){leadScrewMotor.setPower(-1.0);}}
+    public void out(){if(leadScrewMotor.getCurrentPosition()>=MAX_EXTENSION){leadScrewMotor.setPower(1.0);}}
+    public void stop(){leadScrewMotor.setPower(0);}}

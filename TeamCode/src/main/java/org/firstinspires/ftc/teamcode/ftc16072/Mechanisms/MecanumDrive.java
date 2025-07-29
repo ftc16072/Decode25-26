@@ -36,7 +36,7 @@ public class MecanumDrive extends QQMechanism{
 
         List<DcMotor> motors = Arrays.asList(frontLeft, frontRight, backLeft, backRight);
         for (DcMotor motor : motors) {
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }
@@ -46,7 +46,7 @@ public class MecanumDrive extends QQMechanism{
                 speedMultiplier = 0.5;
                 break;
             case SLOW:
-                speedMultiplier = 0.1;
+                speedMultiplier = 0.4;
                 break;
             case FAST:
                 speedMultiplier = 0.75;

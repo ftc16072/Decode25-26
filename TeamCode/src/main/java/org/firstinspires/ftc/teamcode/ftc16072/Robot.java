@@ -23,9 +23,9 @@ public class Robot {
     final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
-             intake,
+            intake,
             leadScrew,
-             pivot
+            pivot
             );
 
     public void init(HardwareMap hardwareMap) {

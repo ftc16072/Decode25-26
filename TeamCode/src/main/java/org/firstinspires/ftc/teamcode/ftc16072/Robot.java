@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.LEDs;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.LeadScrew;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Pivot;
@@ -19,13 +20,15 @@ public class Robot {
     public Intake intake = new Intake();
     public Pivot pivot = new Pivot();
     public LeadScrew leadScrew = new LeadScrew();
+    public LEDs leds = new LEDs();
 
     final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
              intake,
             leadScrew,
-             pivot
+             pivot,
+            leds
             );
 
     public void init(HardwareMap hardwareMap) {

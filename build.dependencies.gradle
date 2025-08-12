@@ -5,7 +5,9 @@ repositories {
     maven { url = 'https://mymaven.bylazar.com/dev' }
 }
 configurations.configureEach {
-    resolutionStrategy.cacheChangingModulesFor 1000, 'minutes'
+    resolutionStrategy.cacheChangingModulesFor 0, 'minutes' // put to 1000 and gradle syncing before pushing to robot
+    // the 0 forces gradle to never cache the snapshot instead invalidating and redownloading it.
+    // thus if you try to send over wifi to robot, it will error as the gradle cannot access maven to download, thus why you have to put it back to 1000
 }
 
 dependencies {

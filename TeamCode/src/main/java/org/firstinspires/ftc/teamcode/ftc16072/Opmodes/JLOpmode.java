@@ -12,6 +12,7 @@ public abstract class JLOpmode extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
+        // TODO: do more stuff here
     }
 
     @Override

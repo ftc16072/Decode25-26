@@ -100,7 +100,7 @@ In this situation, you might wish to clone the TeamCode module, once for each of
 Each of the clones would then appear along side each other in the Android Studio module list,
 together with the FtcRobotController module (and the original TeamCode module).
 
-Selective Team phones can then be programmed by selecting the desired Module from the pulldown list
+Selective Team phones can then be programmed by selecting the desired Module from the pull down list
 prior to clicking to the green Run arrow.
 
 Warning:  This is not for the inexperienced Software developer.

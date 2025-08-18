@@ -92,23 +92,6 @@ public class Tuning extends SelectableOpMode {
         }
     }
 
-    @Override
-    public void onLog(List<String> lines) {
-//        try {
-//            if (!lines.isEmpty()) {
-//                telemetryM.debug(lines.toArray(new String[0]));
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e + " telemetryM failed to log");
-//        }
-//
-//        try {
-//            telemetryM.update();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e + " telemetryM failed to update");
-//        }
-    }
-
     public static void drawCurrent() {
         try {
             Drawing.drawRobot(follower.getPose());

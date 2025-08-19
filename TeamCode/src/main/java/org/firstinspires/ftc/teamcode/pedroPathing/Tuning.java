@@ -87,9 +87,6 @@ public class Tuning extends SelectableOpMode {
         telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
-    @Override
-    public void onLog(List<String> lines) {}
-
     public static void drawCurrent() {
         try {
             Drawing.drawRobot(follower.getPose());

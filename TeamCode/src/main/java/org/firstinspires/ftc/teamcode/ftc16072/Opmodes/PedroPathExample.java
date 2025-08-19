@@ -19,7 +19,7 @@ public class PedroPathExample extends QQOpmode {
         Pose poseStep2 = new Pose(34, 12);
         Pose poseStep3 = new Pose( 8, 12);
         follower.setStartingPose(startPose);
-        PathBuilder builder = Follower.pathBuilder();
+        PathBuilder builder = follower.pathBuilder();
         builder.addPath(new BezierLine(startPose, poseStep1))
                 .setConstantHeadingInterpolation(Math.toRadians(0));
         builder.addPath(new BezierLine(poseStep1, poseStep2))

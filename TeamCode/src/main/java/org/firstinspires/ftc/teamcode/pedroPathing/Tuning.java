@@ -7,12 +7,11 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.stopRobot;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.telemetryM;
 
-import com.bylazar.configurables.PanelsConfigurables;
-import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.configurables.annotations.IgnoreConfigurable;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
-import com.bylazar.configurables.GlobalConfigurables;
+import com.pedropathing.panels.configurables.annotations.Configurable;
+import com.pedropathing.panels.configurables.annotations.IgnoreConfigurable;
+import com.pedropathing.panels.configurables.PanelsConfigurables;
+import com.pedropathing.panels.telemetry.PanelsTelemetry;
+import com.pedropathing.panels.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.Drawing;
 import com.pedropathing.geometry.*;
@@ -85,29 +84,11 @@ public class Tuning extends SelectableOpMode {
 
         poseHistory = follower.getPoseHistory();
 
-        try {
-            telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
-        } catch (Exception e) {
-            throw new RuntimeException(e + " telemetryM failed to initialize");
-        }
+        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
     }
 
     @Override
-    public void onLog(List<String> lines) {
-//        try {
-//            if (!lines.isEmpty()) {
-//                telemetryM.debug(lines.toArray(new String[0]));
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e + " telemetryM failed to log");
-//        }
-//
-//        try {
-//            telemetryM.update();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e + " telemetryM failed to update");
-//        }
-    }
+    public void onLog(List<String> lines) {}
 
     public static void drawCurrent() {
         try {
@@ -417,7 +398,7 @@ class ForwardVelocityTuner extends OpMode {
             telemetry.update();
 
             if (gamepad1.aWasPressed()) {
-                follower.setXMovement(average);
+                follower.setXVelocity(average);
                 String message = "XMovement: " + average;
                 changes.add(message);
             }
@@ -517,7 +498,7 @@ class LateralVelocityTuner extends OpMode {
             telemetryM.update(telemetry);
 
             if (gamepad1.aWasPressed()) {
-                follower.setYMovement(average);
+                follower.setYVelocity(average);
                 String message = "YMovement: " + average;
                 changes.add(message);
             }
@@ -1121,7 +1102,7 @@ class Triangle extends OpMode {
     public void start() {
         follower.setStartingPose(startPose);
 
-        triangle = Follower.pathBuilder()
+        triangle = follower.pathBuilder()
                 .addPath(new BezierLine(startPose, interPose))
                 .setLinearHeadingInterpolation(startPose.getHeading(), interPose.getHeading())
                 .addPath(new BezierLine(interPose, endPose))

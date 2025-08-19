@@ -2,10 +2,11 @@ repositories {
     mavenCentral()
     google() // Needed for androidx
     maven { url= 'https://maven.pedropathing.com/' }
-    maven { url = 'https://mymaven.bylazar.com/dev' }
 }
 configurations.configureEach {
-    resolutionStrategy.cacheChangingModulesFor 1000, 'minutes'
+    resolutionStrategy.cacheChangingModulesFor 0, 'minutes' // put to 1000 and gradle syncing before pushing to robot
+    // the 0 forces gradle to never cache the snapshot instead invalidating and redownloading it.
+    // thus if you try to send over wifi to robot, it will error as the gradle cannot access maven to download, thus why you have to put it back to 1000
 }
 
 dependencies {
@@ -17,11 +18,17 @@ dependencies {
     implementation 'org.firstinspires.ftc:Hardware:10.3.0'
     implementation 'org.firstinspires.ftc:FtcCommon:10.3.0'
     implementation 'org.firstinspires.ftc:Vision:10.3.0'
-    implementation 'com.bylazar:fullpanels:0.0.30'
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.pedropathing:telemetry:0.0.6'
     implementation('com.pedropathing:ftc:1.1.0-SNAPSHOT') {
         changing = true
     }
+
+    implementation 'com.pedropathing:telemetry:0.0.6'
+    implementation 'com.pedropathing.panels:core:0.0.23'
+    implementation 'com.pedropathing.panels:telemetry:0.0.9'
+    implementation 'com.pedropathing.panels:field:0.0.13'
+    implementation 'com.pedropathing.panels:configurables:0.0.15'
+    implementation 'com.pedropathing.panels:utils:0.0.11'
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }

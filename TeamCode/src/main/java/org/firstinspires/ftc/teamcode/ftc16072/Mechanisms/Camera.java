@@ -4,26 +4,33 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestCamera;
-import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOdo;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Camera extends QQMechanism {
     private AprilTagProcessor aprilTagProcessor;
+    private final Position cameraPosition = new Position(DistanceUnit.INCH, 0.25, 5.25, 11.75, 0);
+    private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 2, 15, 0, 0);
 
     VisionPortal visionPortal;
     WebcamName webcam;
     @Override
     public void init(HardwareMap hardwareMap) {
         webcam = hardwareMap.get(WebcamName.class, "Webcam");
-        aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        aprilTagProcessor = new AprilTagProcessor.Builder()
+                .setCameraPose(cameraPosition, cameraOrientation)
+                .build();
+        aprilTagProcessor.setDecimation(2);
 
         visionPortal = VisionPortal.easyCreateWithDefaults(webcam, aprilTagProcessor);
     }
@@ -34,6 +41,18 @@ public class Camera extends QQMechanism {
                 new TestCamera("Webcam", webcam)
 
         );
+    }
+    // returns 180 if not found
+    public double getBearingToTargetDegrees(boolean isRed){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
+                   return detection.ftcPose.bearing;
+                }
+            }
+        }
+        return 180.0;
     }
     public void telemetryAprilTag(Telemetry telemetry) {
 

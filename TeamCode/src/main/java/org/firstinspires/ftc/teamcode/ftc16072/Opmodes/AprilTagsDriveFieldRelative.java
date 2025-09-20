@@ -16,9 +16,40 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
     }
     public void loop(){
         super.loop();
-        nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
         double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
         telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
+
+        double turnSpeed = calculateTurn(bearingToTargetDegrees);
+        if(!gamepad1.left_bumper){
+            turnSpeed = gamepad1.right_stick_x;
+        }
+        nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
+        telemetry.addData("Turn Speed", turnSpeed);
+    }
+    private double lastError = 0;
+    private double sumErrors = 0;
+
+
+    private double calculateTurn(double bearingDegrees){
+        double KP = 0.5 / 45.0;
+        double KI = 0;
+        double KD = 0;
+
+        if (bearingDegrees < -45){
+            return -0.5;
+        }
+        if (bearingDegrees > 45){
+            return 0.5;
+        }
+        double error = bearingDegrees - 0;
+
+        double speed = KP * error;
+        if(Math.abs(speed) < 0.05){
+            speed = 0.05 * Math.signum(speed);
+        }if(Math.abs(bearingDegrees) < 5){
+            speed = 0;
+        }
+        return speed;
     }
 }

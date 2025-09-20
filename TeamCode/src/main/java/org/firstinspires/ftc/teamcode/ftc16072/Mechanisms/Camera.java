@@ -21,7 +21,7 @@ public class Camera extends QQMechanism {
     private AprilTagProcessor aprilTagProcessor;
     private final Position cameraPosition = new Position(DistanceUnit.INCH, 0.25, 5.25, 11.75, 0);
     private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 2, 15, 0, 0);
-
+    private double lastKnownBearing = 180;
     VisionPortal visionPortal;
     WebcamName webcam;
     @Override
@@ -48,11 +48,12 @@ public class Camera extends QQMechanism {
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
                 if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
-                   return detection.ftcPose.bearing;
+                    lastKnownBearing = detection.ftcPose.bearing;
+                    return detection.ftcPose.bearing;
                 }
             }
         }
-        return 180.0;
+        return lastKnownBearing;
     }
     public void telemetryAprilTag(Telemetry telemetry) {
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Camera;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.LeadScrew;
@@ -19,13 +20,15 @@ public class Robot {
     public Intake intake = new Intake();
     public Pivot pivot = new Pivot();
     public LeadScrew leadScrew = new LeadScrew();
+    public Camera camera = new Camera();
 
     final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
-            intake,
-            leadScrew,
-            pivot
+            camera
+          //  intake,
+          //  leadScrew,
+          //  pivot
             );
 
     public void init(HardwareMap hardwareMap) {

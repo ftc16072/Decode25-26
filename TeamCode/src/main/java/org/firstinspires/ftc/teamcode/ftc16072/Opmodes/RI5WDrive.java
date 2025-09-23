@@ -17,5 +17,9 @@ public class RI5WDrive extends QQOpmode{
         }
         int balls = robot.intake.numberOfBalls();
         telemetry.addData("Number of Balls", balls);
+
+        if (gamepad1.b){
+            robot.intake.slow();
+        }
     }
 }

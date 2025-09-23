@@ -28,6 +28,7 @@ public class Intake extends QQMechanism{
     DcMotor intakeMotor;
     TouchSensor limitSwitch;
     int balls;
+    boolean wasLimitSwitchPressed;
 
     @Override
     public void init(HardwareMap hardwareMap) {
@@ -55,11 +56,15 @@ public class Intake extends QQMechanism{
     public void stop(){
         intakeMotor.setPower(0);
     }
-    public void slow(){intakeMotor.setPower(0.5);}
+    public void slow(){
+        intakeMotor.setPower(0.5);
+    }
+
     public int numberOfBalls(){
-        if(limitSwitch.isPressed()){
+        if(limitSwitch.isPressed() && !wasLimitSwitchPressed){
             balls++;
         }
+        wasLimitSwitchPressed = limitSwitch.isPressed();
         return balls;
     }
 }

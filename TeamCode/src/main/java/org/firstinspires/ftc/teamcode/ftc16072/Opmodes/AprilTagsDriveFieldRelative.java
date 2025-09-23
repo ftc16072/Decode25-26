@@ -35,9 +35,10 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
     private double sumErrors = 0;
     ElapsedTime timer = new ElapsedTime();
     private double calculateTurn(double bearingDegrees){
-        double KP = 0.01;
+        double KP = 0.02;
         double KI = 0;
-        double KD = 0.001;
+        double KD = 0.005;
+        double maxSpeed = 0.75;
 /*
         if (bearingDegrees < -30){
             return -0.5;
@@ -50,9 +51,10 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
         double error = bearingDegrees - 0;
         double derivative = (error - lastError) / timer.seconds();
         double speed = (KP * error) + (KD * derivative);
-        if(Math.abs(speed) < 0.05){
-            speed = 0.05 * Math.signum(speed);
-        }if(Math.abs(bearingDegrees) < 5){
+        if(Math.abs(speed) > maxSpeed){
+            speed = maxSpeed * Math.signum(speed);
+        }
+        if(Math.abs(bearingDegrees) < 3){
             speed = 0;
         }
         lastError = error;

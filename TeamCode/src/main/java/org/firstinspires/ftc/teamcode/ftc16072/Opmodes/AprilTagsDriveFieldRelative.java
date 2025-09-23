@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
 public class AprilTagsDriveFieldRelative extends QQOpmode{
@@ -13,6 +14,7 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
             isRed = true;
         }
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
+
     }
     public void loop(){
         super.loop();
@@ -27,29 +29,33 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
     }
+
+
     private double lastError = 0;
     private double sumErrors = 0;
-
-
+    ElapsedTime timer = new ElapsedTime();
     private double calculateTurn(double bearingDegrees){
-        double KP = 0.5 / 45.0;
+        double KP = 0.01;
         double KI = 0;
-        double KD = 0;
-
-        if (bearingDegrees < -45){
+        double KD = 0.001;
+/*
+        if (bearingDegrees < -30){
             return -0.5;
         }
-        if (bearingDegrees > 45){
+        if (bearingDegrees > 30){
             return 0.5;
         }
-        double error = bearingDegrees - 0;
+*/
 
-        double speed = KP * error;
+        double error = bearingDegrees - 0;
+        double derivative = (error - lastError) / timer.seconds();
+        double speed = (KP * error) + (KD * derivative);
         if(Math.abs(speed) < 0.05){
             speed = 0.05 * Math.signum(speed);
         }if(Math.abs(bearingDegrees) < 5){
             speed = 0;
         }
+        lastError = error;
         return speed;
     }
 }

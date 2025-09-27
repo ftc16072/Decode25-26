@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Outtake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
 
 import java.util.Arrays;
@@ -15,13 +16,15 @@ public class Robot {
     public MecanumDrive mecanumDrive = new MecanumDrive();
     public ControlHub controlHub = new ControlHub();
     public Intake intake = new Intake();
+    public Outtake outtake = new Outtake();
 
 
 
     final private List<QQMechanism> mechanisms = Arrays.asList(
             //mecanumDrive,
             controlHub,
-            intake
+            intake,
+            outtake
             );
 
     public void init(HardwareMap hardwareMap) {

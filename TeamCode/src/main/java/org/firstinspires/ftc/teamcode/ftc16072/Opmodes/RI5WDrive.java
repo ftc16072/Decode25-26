@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class RI5WDrive extends QQOpmode{
     public void loop(){
         super.loop();
-        //nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         if(gamepad1.x){
             robot.intake.intake();
         }else{
@@ -15,7 +15,7 @@ public class RI5WDrive extends QQOpmode{
         if(gamepad1.a){
             robot.intake.outtake();
         }
-        int balls = robot.intake.numberOfBalls();
+        int balls = robot.intake.numberOfBalls() - robot.outtake.numberOfBallsShot();
         telemetry.addData("Number of Balls", balls);
 
         if (gamepad1.b){

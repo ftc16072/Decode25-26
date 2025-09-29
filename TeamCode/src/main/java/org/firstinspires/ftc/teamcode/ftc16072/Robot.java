@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Camera;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Outtake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
 
 import java.util.Arrays;
@@ -17,12 +18,14 @@ public class Robot {
     public ControlHub controlHub = new ControlHub();
     public Intake intake = new Intake();
     public Camera camera = new Camera();
+    public Outtake outtake = new Outtake();
 
   final private List<QQMechanism> mechanisms = Arrays.asList(
-            //mecanumDrive,
+            mecanumDrive,
             controlHub,
             camera
-            intake
+            intake,
+            outtake
             );
 
     public void init(HardwareMap hardwareMap) {

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Camera;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
@@ -16,13 +17,13 @@ public class Robot {
     public MecanumDrive mecanumDrive = new MecanumDrive();
     public ControlHub controlHub = new ControlHub();
     public Intake intake = new Intake();
+    public Camera camera = new Camera();
     public Outtake outtake = new Outtake();
 
-
-
-    final private List<QQMechanism> mechanisms = Arrays.asList(
-            //mecanumDrive,
+  final private List<QQMechanism> mechanisms = Arrays.asList(
+            mecanumDrive,
             controlHub,
+            camera,
             intake,
             outtake
             );

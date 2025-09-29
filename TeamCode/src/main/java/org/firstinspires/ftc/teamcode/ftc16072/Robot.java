@@ -23,7 +23,7 @@ public class Robot {
   final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
             controlHub,
-            camera
+            camera,
             intake,
             outtake
             );

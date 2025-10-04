@@ -21,8 +21,8 @@ public class ControlHub extends QQMechanism{
         imu = hardwareMap.get(IMU.class,"imu");
 
         RevHubOrientationOnRobot orientationOnRobot =
-                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                        RevHubOrientationOnRobot.UsbFacingDirection.UP);
+                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
         imu.initialize(new IMU.Parameters(orientationOnRobot));
     }
     public double getYaw(AngleUnit angleUnit){

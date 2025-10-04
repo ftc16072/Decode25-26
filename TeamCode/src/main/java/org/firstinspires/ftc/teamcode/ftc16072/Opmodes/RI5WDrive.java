@@ -75,15 +75,17 @@ public class RI5WDrive extends QQOpmode{
         }
 
 
-         if (gamepad1.dpad_up) {
-             angle+=5;
+         if (gamepad1.dpadUpWasPressed()) {
+             angle += 5;
              robot.outtake.setAngle(angle, AngleUnit.DEGREES, telemetry);
          }
-         if (gamepad1.dpad_down) {
-             angle-=5;
+         if (gamepad1.dpadDownWasPressed()) {
+             angle -= 5;
              robot.outtake.setAngle(angle, AngleUnit.DEGREES, telemetry);
          }
     }
+
+
     private double lastError = 0;
     private double sumErrors = 0;
     ElapsedTime timer = new ElapsedTime();

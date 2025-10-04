@@ -43,7 +43,7 @@ public class RI5WDrive extends QQOpmode{
             }
         }
 
-        if ((gamepad1.dpad_left) && (robot.outtake.isReady())){
+        if ((gamepad1.dpad_left) && (robot.outtake.isReady(telemetry))){
             robot.transfer.moveUp();
         }
         if ((gamepad1.dpad_right)){

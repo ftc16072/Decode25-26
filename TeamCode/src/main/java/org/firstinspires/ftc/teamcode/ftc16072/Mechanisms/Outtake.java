@@ -25,29 +25,30 @@ public class Outtake extends QQMechanism {
 
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
-    final double ON_POSITION = 0.2; //todo: figure out number
-    final double OFF_POSITION = 0.7; //todo: figure out number
 
-    final double MIN_SERVO_POSITION = 0.4; // todo find number
-    final double MAX_SERVO_POSITION = 0.8; // todo fund number
+    final double MIN_LEFT_SERVO_POSITION = 0.72;
+    final double MAX_LEFT_SERVO_POSITION = 0.92;
+    final double MIN_RIGHT_SERVO_POSITION = 0.0;
+    final double MAX_RIGHT_SERVO_POSITION = MIN_RIGHT_SERVO_POSITION + (MAX_LEFT_SERVO_POSITION - MIN_LEFT_SERVO_POSITION);
 
-    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 4000; //todo: figure out number
+    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 2500;
     int ballsShot;
     boolean wasLimitSwitchPressed;
 
     @Override
     public void init(HardwareMap hardwareMap) {
-        leftOuttakeMotor = hardwareMap.get(DcMotorEx.class, "left_Outtake");
-        rightOuttakeMotor = hardwareMap.get(DcMotorEx.class, "right_Outtake");
-        leftOuttakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftOuttakeMotor = hardwareMap.get(DcMotorEx.class, "outtake_left_motor");
+        rightOuttakeMotor = hardwareMap.get(DcMotorEx.class, "outtake_right_motor");
+        rightOuttakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         limitSwitch = hardwareMap.get(TouchSensor.class, "outtake_switch");
 
-        leftOuttakeServo = hardwareMap.get(Servo.class, "left_Angle");
-        rightOuttakeServo = hardwareMap.get(Servo.class, "right_Angle");
-        //leftOuttakeServo.setPosition();
-        rightOuttakeServo.setDirection(Servo.Direction.REVERSE);
-        leftOuttakeServo.scaleRange(MIN_SERVO_POSITION, MAX_SERVO_POSITION);
-        rightOuttakeServo.scaleRange(MIN_SERVO_POSITION, MAX_SERVO_POSITION);
+        leftOuttakeServo = hardwareMap.get(Servo.class, "outtake_left_servo");
+        rightOuttakeServo = hardwareMap.get(Servo.class, "outtake_right_servo");
+
+        leftOuttakeServo.scaleRange(MIN_LEFT_SERVO_POSITION, MAX_LEFT_SERVO_POSITION);
+        leftOuttakeServo.setDirection(Servo.Direction.REVERSE);
+
+        rightOuttakeServo.scaleRange(MIN_RIGHT_SERVO_POSITION, MAX_RIGHT_SERVO_POSITION);
 
     }
 
@@ -57,8 +58,8 @@ public class Outtake extends QQMechanism {
         return Arrays.asList(
                 new TestMotor("leftMotor", leftOuttakeMotor, TEST_SPEED),
                 new TestMotor("rightMotor", rightOuttakeMotor, TEST_SPEED),
-                new TestServo("leftServo", leftOuttakeServo, ON_POSITION, OFF_POSITION),
-                new TestServo("rightServo", rightOuttakeServo, ON_POSITION, OFF_POSITION),
+                new TestServo("leftServo", leftOuttakeServo, 1.0, 0),
+                new TestServo("rightServo", rightOuttakeServo, 1.0, 0),
                 new TestTouchSensor("outtakeSwitch", limitSwitch)
         );
     }
@@ -73,14 +74,25 @@ public class Outtake extends QQMechanism {
         rightOuttakeMotor.setPower(0);
     }
 
-    public boolean isReady() {
-        return ((leftOuttakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND) &&
-                (rightOuttakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND));
+    public boolean isReady(Telemetry telemetry) {
+        telemetry.addData("LeftMotor", leftOuttakeMotor.getVelocity());
+        telemetry.addData("RightMotor", rightOuttakeMotor.getVelocity());
+        telemetry.addData("Left fast enough", leftOuttakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND);
+        telemetry.addData("Right fast enough", rightOuttakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND);
+
+        return ((leftOuttakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_DEGREES_PER_SECOND)) &&
+                (rightOuttakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_DEGREES_PER_SECOND)));
     }
 
+    /**
+     * setAngle - sets the angle of the shooting wheels
+     * @param angle - needs to be between 0 and 75 degrees
+     * @param angleUnit - DEGREES or RADIANS
+     * @param telemetry - where to send the telemetry
+     */
     public void setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
-        double MIN_DEGREES = 40; //todo find number
-        double MAX_DEGREES = 80; // todo find number
+        double MIN_DEGREES = 0;
+        double MAX_DEGREES = 75;
         double angleDegrees = angleUnit.toDegrees(angle);
         if ((angleDegrees < MIN_DEGREES) ||
                 (angleDegrees > MAX_DEGREES)){

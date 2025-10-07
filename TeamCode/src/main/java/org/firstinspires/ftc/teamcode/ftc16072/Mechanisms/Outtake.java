@@ -26,8 +26,8 @@ public class Outtake extends QQMechanism {
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
-    final double MIN_LEFT_SERVO_POSITION = 0.72;
-    final double MAX_LEFT_SERVO_POSITION = 0.92;
+    final double MIN_LEFT_SERVO_POSITION = 0.70;
+    final double MAX_LEFT_SERVO_POSITION = 1;
     final double MIN_RIGHT_SERVO_POSITION = 0.0;
     final double MAX_RIGHT_SERVO_POSITION = MIN_RIGHT_SERVO_POSITION + (MAX_LEFT_SERVO_POSITION - MIN_LEFT_SERVO_POSITION);
 

@@ -21,6 +21,7 @@ public class TestOdo extends QQTest {
         if(on){
             testOdo.setPosition(new Pose2D(DistanceUnit.MM,0,0,AngleUnit.RADIANS,0));
         }else{
+            testOdo.update();
             Pose2D currentPose = testOdo.getPosition();
             telemetry.addData("Odo X", currentPose.getX(DistanceUnit.MM));
             telemetry.addData("Odo Y", currentPose.getY(DistanceUnit.MM));

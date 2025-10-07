@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
@@ -20,6 +21,7 @@ public class Transfer extends QQMechanism{
     public void init(HardwareMap hardwareMap) {
         bottomTransferServo = hardwareMap.get(CRServo.class, "bottom_transfer");
         topTransferServo = hardwareMap.get(CRServo.class, "top_transfer");
+        topTransferServo.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 

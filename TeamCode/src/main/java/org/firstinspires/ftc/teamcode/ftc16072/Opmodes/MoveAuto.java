@@ -1,0 +1,42 @@
+package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
+
+
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.PathChain;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+
+@Autonomous
+public class MoveAuto extends QQOpmode {
+    private Follower follower;
+    private PathChain moveForward;
+    int step = 0;
+
+    public void init() {
+        super.init();
+
+        moveForward = follower.pathBuilder()
+                .addPath(
+                        // Path 1
+                        new BezierLine(new Pose(56.000, 9.000), new Pose(56.000, 30.000))
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90))
+                .build();
+    }
+    public void loop(){
+        super.loop();
+        switch(step){
+            case 0:
+                follower.followPath(moveForward);
+                step = 1;
+                break;
+            case 1:
+                break;
+        }
+
+    }
+
+
+}

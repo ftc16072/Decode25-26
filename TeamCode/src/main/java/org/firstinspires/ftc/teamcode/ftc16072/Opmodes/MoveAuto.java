@@ -7,6 +7,8 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+
 
 @Autonomous
 public class MoveAuto extends QQOpmode {
@@ -16,6 +18,7 @@ public class MoveAuto extends QQOpmode {
 
     public void init() {
         super.init();
+        follower = Constants.createFollower(hardwareMap);
 
         moveForward = follower.pathBuilder()
                 .addPath(

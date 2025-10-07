@@ -26,11 +26,12 @@ public class MoveAuto extends QQOpmode {
                         // Path 1
                         new BezierLine(new Pose(56.000, 9.000), new Pose(56.000, 30.000))
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(90))
+                .setConstantHeadingInterpolation(Math.toRadians(270))
                 .build();
     }
     public void loop(){
         super.loop();
+        follower.update();
         switch(step){
             case 0:
                 follower.followPath(moveForward);

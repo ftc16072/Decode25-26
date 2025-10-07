@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Camera;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.OdoPods;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Outtake;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.QQMechanism;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Transfer;
@@ -21,6 +22,7 @@ public class Robot {
     public Camera camera = new Camera();
     public Outtake outtake = new Outtake();
     public Transfer transfer = new Transfer();
+    public OdoPods odoPods = new OdoPods();
 
   final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
@@ -28,7 +30,8 @@ public class Robot {
             camera,
             intake,
             outtake,
-            transfer
+            transfer,
+            odoPods
             );
 
     public void init(HardwareMap hardwareMap) {

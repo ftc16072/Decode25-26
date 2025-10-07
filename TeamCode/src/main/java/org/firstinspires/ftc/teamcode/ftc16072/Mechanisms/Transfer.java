@@ -21,7 +21,7 @@ public class Transfer extends QQMechanism{
     public void init(HardwareMap hardwareMap) {
         bottomTransferServo = hardwareMap.get(CRServo.class, "bottom_transfer");
         topTransferServo = hardwareMap.get(CRServo.class, "top_transfer");
-        topTransferServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        bottomTransferServo.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 

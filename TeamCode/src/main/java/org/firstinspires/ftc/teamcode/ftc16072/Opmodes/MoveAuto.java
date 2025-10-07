@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 
 @Autonomous
+@SuppressWarnings("unused")
 public class MoveAuto extends QQOpmode {
     private Follower follower;
     private PathChain moveForward;

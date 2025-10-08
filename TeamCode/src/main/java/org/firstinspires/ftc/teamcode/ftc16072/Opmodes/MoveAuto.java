@@ -21,14 +21,17 @@ public class MoveAuto extends QQOpmode {
     public void init() {
         super.init();
         follower = Constants.createFollower(hardwareMap);
-        follower.setPose(new Pose(56, 9, Math.toRadians(90)));
         moveForward = follower.pathBuilder()
                 .addPath(
                         // Path 1
                         new BezierLine(new Pose(56.000, 9.000), new Pose(56.000, 30.000))
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(90))
+                .setConstantHeadingInterpolation(Math.toRadians(270))
                 .build();
+    }
+    public void start(){
+        super.start();
+        follower.setStartingPose(new Pose(56, 9, Math.toRadians(270)));
     }
     public void loop(){
         super.loop();

@@ -22,13 +22,13 @@ public class Outtake extends QQMechanism {
     DcMotorEx rightOuttakeMotor;
     Servo leftOuttakeServo;
     Servo rightOuttakeServo;
-
+    public double angleDegrees;
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
     final double MIN_LEFT_SERVO_POSITION = 0.70;
-    final double MAX_LEFT_SERVO_POSITION = 1;
-    final double MIN_RIGHT_SERVO_POSITION = 0.0;
+    final double MAX_LEFT_SERVO_POSITION = .97;
+    final double MIN_RIGHT_SERVO_POSITION = 0;
     final double MAX_RIGHT_SERVO_POSITION = MIN_RIGHT_SERVO_POSITION + (MAX_LEFT_SERVO_POSITION - MIN_LEFT_SERVO_POSITION);
 
     final double SHOOTING_SPEED_DEGREES_PER_SECOND = 2500;
@@ -93,7 +93,7 @@ public class Outtake extends QQMechanism {
     public void setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
         double MIN_DEGREES = 0;
         double MAX_DEGREES = 75;
-        double angleDegrees = angleUnit.toDegrees(angle);
+        angleDegrees = angleUnit.toDegrees(angle);
         if ((angleDegrees < MIN_DEGREES) ||
                 (angleDegrees > MAX_DEGREES)){
             telemetry.addData("angle is not included in range",angleDegrees);

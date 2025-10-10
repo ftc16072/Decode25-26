@@ -34,7 +34,9 @@ public class Transfer extends QQMechanism{
                 new TestCRServo("topServo backward", topTransferServo, MOVE_BACKWARD_SPEED)
         );
     }
-
+    public void moveLowServoUp(){
+        bottomTransferServo.setPower(MOVE_FORWARD_SPEED);
+    }
     public void moveUp(){
         bottomTransferServo.setPower(MOVE_FORWARD_SPEED);
         topTransferServo.setPower(MOVE_FORWARD_SPEED);

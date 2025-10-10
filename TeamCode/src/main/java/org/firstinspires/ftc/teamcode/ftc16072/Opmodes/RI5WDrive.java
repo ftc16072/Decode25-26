@@ -24,6 +24,8 @@ public class RI5WDrive extends QQOpmode{
     }
 
     public void loop(){
+        telemetry.addData("Distance From Target", robot.camera.getDistanceToTargetInches(isRed));
+        telemetry.addData("Servo Angle", robot.outtake.angleDegrees);
         super.loop();
         if (gamepad1.right_trigger > TRIGGER_THRESHOLD){
             telemetry.addData("Alliance", isRed ? "Red" : "Blue");
@@ -45,6 +47,7 @@ public class RI5WDrive extends QQOpmode{
 
         if(gamepad1.a){
             robot.intake.intake();
+            robot.transfer.moveLowServoUp();
         } else if (gamepad1.x) {
             robot.intake.eject();
         }else{
@@ -64,13 +67,13 @@ public class RI5WDrive extends QQOpmode{
             }
         }
 
-        if ((gamepad1.dpad_left) && (robot.outtake.isReady(telemetry))){
+        if ((gamepad1.dpad_right) && (robot.outtake.isReady(telemetry))){
             robot.transfer.moveUp();
         }
-        else if ((gamepad1.dpad_right)){
+        else if ((gamepad1.dpad_left)){
             robot.transfer.moveDown();
         }
-        else{
+        else if(!gamepad1.a){
             robot.transfer.stop();
         }
 
@@ -82,6 +85,9 @@ public class RI5WDrive extends QQOpmode{
          if (gamepad1.dpadDownWasPressed()) {
              angle -= 5;
              robot.outtake.setAngle(angle, AngleUnit.DEGREES, telemetry);
+         }
+         if (gamepad1.left_stick_button){
+             robot.controlHub.resetImu();
          }
     }
 

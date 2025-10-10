@@ -28,7 +28,6 @@ public class Intake extends QQMechanism{
         intakeMotor =  hardwareMap.get(DcMotor.class, "intakeMotor");
         limitSwitch = hardwareMap.get(TouchSensor.class, "limitSwitch");
   //      intakeColorSensor = hardwareMap.get(RevColorSensorV3.class , "intake_color" );
-
     }
     @Override
     public List<QQTest> getTests() {

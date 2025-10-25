@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
-public class AprilTagsDriveFieldRelative extends QQOpmode{
+public class AprilTags_Odo_DriveFieldRelative extends QQOpmode{
     public boolean isRed = true;
     public void init_loop(){
         super.init_loop();
@@ -28,6 +28,8 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
+        telemetry.addData("Odo Pod Pos", robot.odoPods.getPose());
+        robot.camera.telemetryAprilTag(telemetry);
     }
 
 

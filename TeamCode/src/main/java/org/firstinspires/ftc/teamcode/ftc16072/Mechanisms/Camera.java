@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
@@ -70,16 +71,40 @@ public class Camera extends QQMechanism {
         }
         return lastKnownDistance;
     }
-    public boolean canSeeAprilTag(){
+    public boolean isAprilTagVisible(boolean isRed) {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                return true;
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)) {
+                    return true;
+                }
             }
-        }
-        return false;
+        }return false;
     }
-    public void telemetryAprilTag(Telemetry telemetry){
+    public double getPosXInches(boolean isRed){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
+                    return detection.robotPose.getPosition().x;
+                }
+            }
+        }return 0;
+    }
+
+    public double getPosYInches(boolean isRed){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
+                    return detection.robotPose.getPosition().y;
+                }
+            }
+        }return 0;
+    }
+
+
+    public void telemetryAprilTag(Telemetry telemetry) {
 
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());

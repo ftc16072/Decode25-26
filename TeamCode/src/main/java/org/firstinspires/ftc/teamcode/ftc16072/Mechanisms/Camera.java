@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
@@ -98,6 +97,17 @@ public class Camera extends QQMechanism {
             if (detection.metadata != null) {
                 if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
                     return detection.robotPose.getPosition().y;
+                }
+            }
+        }return 0;
+    }
+
+    public double getHeadingDegrees(boolean isRed){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
+                    return detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
                 }
             }
         }return 0;

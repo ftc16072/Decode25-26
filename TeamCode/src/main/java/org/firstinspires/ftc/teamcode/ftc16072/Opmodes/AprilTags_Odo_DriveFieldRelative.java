@@ -30,6 +30,10 @@ public class AprilTags_Odo_DriveFieldRelative extends QQOpmode{
         telemetry.addData("Turn Speed", turnSpeed);
         telemetry.addData("Odo Pod Pos", robot.odoPods.getPose());
         robot.camera.telemetryAprilTag(telemetry);
+        if(robot.camera.isAprilTagVisible(isRed)){
+            telemetry.addLine("OdoPod Reset");
+            robot.odoPods.resetPose(robot.camera.getPosXInches(isRed),robot.camera.getPosYInches(isRed),robot.camera.getHeadingDegrees(isRed));
+        }
     }
 
 

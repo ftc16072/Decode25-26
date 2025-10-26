@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOdo;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class OdoPods extends QQMechanism{
@@ -38,7 +39,7 @@ public class OdoPods extends QQMechanism{
     }
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new TestOdo("odoPods", pinpoint)
 
         );

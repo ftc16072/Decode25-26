@@ -24,8 +24,10 @@ public class Outtake extends QQMechanism {
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
-    final double MIN_HOOD_SERVO_POSITION = 0.70;
-    final double MAX_HOOD_SERVO_POSITION = .97;
+    final double MIN_HOOD_SERVO_POSITION = 0.5;
+    final double MAX_HOOD_SERVO_POSITION = .35;
+    final double HOOD_POSITION = 0;
+
 
     final double SHOOTING_SPEED_DEGREES_PER_SECOND = 2500;
     int ballsShot;
@@ -41,6 +43,8 @@ public class Outtake extends QQMechanism {
 
         hoodServo.scaleRange(MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
         hoodServo.setDirection(Servo.Direction.REVERSE);
+
+
 
 
 
@@ -91,7 +95,12 @@ public class Outtake extends QQMechanism {
 
 
         hoodServo.setPosition(Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, 0, 1.0));
+
+
+
     }
+
+
     public int numberOfBallsShot(){
         if(!limitSwitch.isPressed() && wasLimitSwitchPressed){
             ballsShot++;

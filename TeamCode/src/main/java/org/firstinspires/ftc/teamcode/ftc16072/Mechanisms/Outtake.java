@@ -81,7 +81,7 @@ public class Outtake extends QQMechanism {
      * @param angleUnit - DEGREES or RADIANS
      * @param telemetry - where to send the telemetry
      */
-    public void setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
+    public double setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
         double MIN_DEGREES = 0;
         double MAX_DEGREES = 75; //need to calculate
         angleDegrees = angleUnit.toDegrees(angle);
@@ -92,12 +92,11 @@ public class Outtake extends QQMechanism {
             angleDegrees = MAX_DEGREES;
             telemetry.addData("angle change to", angleDegrees);
         }
+        double servoPosiition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
 
 
-        hoodServo.setPosition(Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, 0, 1.0));
-
-
-
+        hoodServo.setPosition(servoPosiition);
+        return angleDegrees;
     }
 
 

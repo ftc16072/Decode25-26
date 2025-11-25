@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
@@ -23,8 +24,10 @@ public class Outtake extends QQMechanism {
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
-    final double MIN_HOOD_SERVO_POSITION = 0.70;
-    final double MAX_HOOD_SERVO_POSITION = .97;
+    final double MIN_HOOD_SERVO_POSITION = 0.5;
+    final double MAX_HOOD_SERVO_POSITION = .35;
+    final double HOOD_POSITION = 0;
+
 
     final double SHOOTING_SPEED_DEGREES_PER_SECOND = 2500;
     int ballsShot;
@@ -40,6 +43,8 @@ public class Outtake extends QQMechanism {
 
         hoodServo.scaleRange(MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
         hoodServo.setDirection(Servo.Direction.REVERSE);
+
+
 
 
 
@@ -76,7 +81,7 @@ public class Outtake extends QQMechanism {
      * @param angleUnit - DEGREES or RADIANS
      * @param telemetry - where to send the telemetry
      */
-    public void setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
+    public double setAngle(double angle, AngleUnit angleUnit, Telemetry telemetry){
         double MIN_DEGREES = 0;
         double MAX_DEGREES = 75; //need to calculate
         angleDegrees = angleUnit.toDegrees(angle);
@@ -87,10 +92,14 @@ public class Outtake extends QQMechanism {
             angleDegrees = MAX_DEGREES;
             telemetry.addData("angle change to", angleDegrees);
         }
+        double servoPosiition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
 
 
-        hoodServo.setPosition(Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, 0, 1.0));
+        hoodServo.setPosition(servoPosiition);
+        return angleDegrees;
     }
+
+
     public int numberOfBallsShot(){
         if(!limitSwitch.isPressed() && wasLimitSwitchPressed){
             ballsShot++;

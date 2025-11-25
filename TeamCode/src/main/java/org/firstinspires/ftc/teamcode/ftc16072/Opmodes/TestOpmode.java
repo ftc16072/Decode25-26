@@ -37,17 +37,13 @@ public class TestOpmode extends QQOpmode {
 
         if (gamepad1.a) {
             robot.transfer.moveBallToShooter();
+        }else if (gamepad1.dpad_left){
+            robot.transfer.shooterDown();
         }
 
         if (gamepad1.b){
             robot.transfer.storeBall();
-        }
-
-        if(gamepad1.dpad_left){
-            robot.transfer.shooterDown();
-        }
-
-        if(gamepad1.dpad_right){
+        }else if(gamepad1.dpad_right){
             robot.transfer.storageDown();
         }
 

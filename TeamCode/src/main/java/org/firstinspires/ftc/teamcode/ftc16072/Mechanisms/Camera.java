@@ -19,8 +19,8 @@ import java.util.List;
 
 public class Camera extends QQMechanism {
     private AprilTagProcessor aprilTagProcessor;
-    private final Position cameraPosition = new Position(DistanceUnit.INCH, 0.25, 5.25, 11.75, 0);
-    private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 2, 15, 0, 0);
+    private final Position cameraPosition = new Position(DistanceUnit.INCH, 3, 6, 8, 0);
+    private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 75, 180, 0);
     private double lastKnownBearing = 180;
     private double lastKnownDistance = 36;
     VisionPortal visionPortal;

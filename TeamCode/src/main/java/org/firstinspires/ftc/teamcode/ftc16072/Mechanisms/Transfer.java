@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transfer extends QQMechanism{
-    double SHOOTER_POSITION = 1; //need to figure out position
+    double SHOOTER_POSITION = 0.5; //need to figure out position
     double STORAGE_POSITION = 0.7; //need to figure out position
     double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
     double STORAGE_DOWN_POSITION = 0.45; //need to figure out position
@@ -36,6 +36,7 @@ public class Transfer extends QQMechanism{
     }
     public void moveBallToShooter(){
         shooterTransferServo.setPosition(SHOOTER_POSITION);
+        storageTransferServo.setPosition(STORAGE_POSITION);
     }
     public void storeBall(){
         storageTransferServo.setPosition(STORAGE_POSITION);

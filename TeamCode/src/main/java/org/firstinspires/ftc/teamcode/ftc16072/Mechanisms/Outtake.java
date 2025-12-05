@@ -41,7 +41,7 @@ public class Outtake extends QQMechanism {
 
         hoodServo = hardwareMap.get(Servo.class, "hood_servo");
 
-        hoodServo.scaleRange(MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
+        hoodServo.scaleRange(MAX_HOOD_SERVO_POSITION,MIN_HOOD_SERVO_POSITION);
         hoodServo.setDirection(Servo.Direction.REVERSE);
 
 

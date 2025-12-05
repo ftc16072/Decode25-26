@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
-
+@TeleOp
     public class HPETeleOp extends QQOpmode {
         public static final double TRIGGER_THRESHOLD = 0.5;
         public double angleDegrees = 0;

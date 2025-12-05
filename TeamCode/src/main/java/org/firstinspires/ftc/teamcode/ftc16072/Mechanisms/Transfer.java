@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transfer extends QQMechanism{
-    double SHOOTER_POSITION = 0.5; //need to figure out position
+    double SHOOTER_POSITION = 0.7; //need to figure out position
     double STORAGE_POSITION = 0.7; //need to figure out position
     double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
     double STORAGE_DOWN_POSITION = 0.45; //need to figure out position

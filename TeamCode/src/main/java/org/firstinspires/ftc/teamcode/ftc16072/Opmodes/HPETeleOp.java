@@ -66,7 +66,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.intake.stop();
             */
 
-            if((gamepad1.b)){
+            if((gamepad1.start)){
                 robot.outtake.spinUp();
             }
             else {
@@ -85,7 +85,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
             angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
 
         }
-        
+
 
         private double lastError = 0;
         private double sumErrors = 0;

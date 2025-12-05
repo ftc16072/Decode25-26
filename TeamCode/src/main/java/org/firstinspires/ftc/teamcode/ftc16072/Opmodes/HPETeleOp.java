@@ -44,15 +44,10 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
                 telemetry.addData("Turn Speed", turnSpeed);
 
-            if (gamepad1.a) {
-                robot.transfer.moveBallToShooter();
-            }else if (gamepad1.dpad_left){
-                robot.transfer.shooterDown();
-            }
 
             if (gamepad1.b){
                 robot.transfer.storeBall();
-            }else if(gamepad1.dpad_right){
+            }else{
                 robot.transfer.storageDown();
             }
 
@@ -66,10 +61,10 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.intake.stop();
             */
 
-            if((gamepad1.start)){
+            if((gamepad1.left_trigger > TRIGGER_THRESHOLD)){
                 robot.outtake.spinUp();
             }
-            else {
+            else if((gamepad1.right_stick_button)){
                 robot.outtake.stop();
             }
 

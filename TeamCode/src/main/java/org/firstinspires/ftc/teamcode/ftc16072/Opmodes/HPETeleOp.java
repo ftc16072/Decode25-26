@@ -79,14 +79,13 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
             else if(gamepad1.dpadDownWasPressed()){
                 angleDegrees -= 5;
             }
+            if(gamepad1.y) {
+                robot.controlHub.resetImu();
+            }
             angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
 
-
-
-
-
-
         }
+        
 
         private double lastError = 0;
         private double sumErrors = 0;

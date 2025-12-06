@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 @TeleOp
     public class HPETeleOp extends QQOpmode {
         public static final double TRIGGER_THRESHOLD = 0.5;
-        public double angleDegrees = 0;
+        public double angleDegrees = 35;
         public boolean isRed = true;
         public void init_loop(){
             super.init_loop();
@@ -46,11 +46,17 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 
             if (gamepad1.b){
-                robot.transfer.storeBall();
+                robot.transfer.moveToShooter();
             }else{
-                robot.transfer.storageDown();
+                robot.transfer.storeBall();
+                robot.transfer.shooterDown();
             }
-
+            if(gamepad1.a){
+                robot.transfer.shooterServoUp();
+            }
+            if(gamepad1.x){
+                robot.transfer.moveToStorage();
+            }
             /*(if((gamepad1.y)){
                 robot.intake.intake();
             }
@@ -78,7 +84,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.controlHub.resetImu();
             }
             angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
-
+            telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
         }
 
 

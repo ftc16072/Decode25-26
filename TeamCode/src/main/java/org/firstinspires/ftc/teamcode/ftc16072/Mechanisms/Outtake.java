@@ -96,7 +96,7 @@ public class Outtake extends QQMechanism {
         }
         double servoPosiition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
 
-
+        telemetry.addData("angle", angleDegrees);
         hoodServo.setPosition(servoPosiition);
         return angleDegrees;
     }

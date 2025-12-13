@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -46,8 +47,13 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 
             if (gamepad1.b){
-                robot.transfer.moveToShooter();
+                if  (robot.outtake.isReady(telemetry)){
+                    robot.transfer.moveToShooter();
+                }else{
+                    gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
+                }
             }else{
+                gamepad1.stopRumble();
                 robot.transfer.storeBall();
                 robot.transfer.shooterDown();
             }

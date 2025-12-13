@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -30,14 +31,16 @@ public class Outtake extends QQMechanism {
     final double HOOD_POSITION = 0;
 
 
-    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 2500;
+    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 1800;
     int ballsShot;
     boolean wasLimitSwitchPressed;
 
     @Override
     public void init(HardwareMap hardwareMap) {
         outtakeMotor = hardwareMap.get(DcMotorEx.class, "outtake_motor");
+        outtakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         outtakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        outtakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         limitSwitch = hardwareMap.get(TouchSensor.class, "outtake_switch");
 
@@ -63,7 +66,7 @@ public class Outtake extends QQMechanism {
     }
 
     public void spinUp() {
-        outtakeMotor.setVelocity(SHOOTING_SPEED_DEGREES_PER_SECOND, AngleUnit.DEGREES);
+        outtakeMotor.setVelocity(SHOOTING_SPEED_DEGREES_PER_SECOND);
     }
 
     public void stop() {
@@ -71,7 +74,6 @@ public class Outtake extends QQMechanism {
     }
 
     public boolean isReady(Telemetry telemetry) {
-        telemetry.addData("OuttakeMotor", outtakeMotor.getVelocity());
         telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND);
 
         return (outtakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_DEGREES_PER_SECOND));
@@ -110,4 +112,9 @@ public class Outtake extends QQMechanism {
         return ballsShot;
     }
 
+    @Override
+    public void update(Telemetry telemetry) {
+        super.update(telemetry);
+        telemetry.addData("OuttakeSpeed", outtakeMotor.getVelocity());
+    }
 }

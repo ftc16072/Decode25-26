@@ -1,12 +1,23 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
-import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+@TeleOp
     public class HPETeleOp extends QQOpmode {
         public static final double TRIGGER_THRESHOLD = 0.5;
-        @Override
-        public void init() {
-
+        public double angleDegrees = 35;
+        public boolean isRed = true;
+        public void init_loop(){
+            super.init_loop();
+            if(gamepad1.x){
+                isRed = false;
+            }else if(gamepad1.b){
+                isRed = true;
+            }
+            telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
         }
 
@@ -22,20 +33,30 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
             else {
                 robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
             }
-            nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+                telemetry.addData("Alliance", isRed ? "Red" : "Blue");
+                double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
+                telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
 
-            if (gamepad1.a) {
-                robot.transfer.moveBallToShooter();
-            }else if (gamepad1.dpad_left){
-                robot.transfer.shooterDown();
-            }
+                double turnSpeed = calculateTurn(bearingToTargetDegrees);
+                if(!gamepad1.left_bumper){
+                    turnSpeed = gamepad1.right_stick_x;
+                }
+                nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
+                telemetry.addData("Turn Speed", turnSpeed);
+
 
             if (gamepad1.b){
+                robot.transfer.moveToShooter();
+            }else{
                 robot.transfer.storeBall();
-            }else if(gamepad1.dpad_right){
-                robot.transfer.storageDown();
+                robot.transfer.shooterDown();
             }
-
+            if(gamepad1.a){
+                robot.transfer.shooterServoUp();
+            }
+            if(gamepad1.x){
+                robot.transfer.moveToStorage();
+            }
             /*(if((gamepad1.y)){
                 robot.intake.intake();
             }
@@ -46,18 +67,56 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.intake.stop();
             */
 
-            if((gamepad1.b)){
+            if((gamepad1.left_trigger > TRIGGER_THRESHOLD)){
                 robot.outtake.spinUp();
             }
-            else {
+            else if((gamepad1.right_stick_button)){
                 robot.outtake.stop();
             }
 
-
-
+            if (gamepad1.dpadUpWasPressed()){
+                angleDegrees += 5;
+            }
+            else if(gamepad1.dpadDownWasPressed()){
+                angleDegrees -= 5;
+            }
+            if(gamepad1.y) {
+                robot.controlHub.resetImu();
+            }
+            angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
+            telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
         }
 
 
+        private double lastError = 0;
+        private double sumErrors = 0;
+        ElapsedTime timer = new ElapsedTime();
+        private double calculateTurn(double bearingDegrees){
+            double KP = 0.02;
+            double KI = 0;
+            double KD = 0.005;
+            double maxSpeed = 0.75;
+/*
+        if (bearingDegrees < -30){
+            return -0.5;
+        }
+        if (bearingDegrees > 30){
+            return 0.5;
+        }
+*/
+
+            double error = bearingDegrees - 0;
+            double derivative = (error - lastError) / timer.seconds();
+            double speed = (KP * error) + (KD * derivative);
+            if(Math.abs(speed) > maxSpeed){
+                speed = maxSpeed * Math.signum(speed);
+            }
+            if(Math.abs(bearingDegrees) < 3){
+                speed = 0;
+            }
+            lastError = error;
+            return speed;
+        }
 
     }
 

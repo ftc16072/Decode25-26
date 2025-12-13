@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transfer extends QQMechanism{
-    double SHOOTER_POSITION = 1; //need to figure out position
+    double SHOOTER_POSITION = 0.6; //need to figure out position
     double STORAGE_POSITION = 0.7; //need to figure out position
     double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
-    double STORAGE_DOWN_POSITION = 0.45; //need to figure out position
+    double STORAGE_DOWN_POSITION = 0.525; //need to figure out position
 
 
     Servo shooterTransferServo;
@@ -34,9 +34,6 @@ public class Transfer extends QQMechanism{
                 new TestServo("storageServo up", storageTransferServo, STORAGE_POSITION, STORAGE_DOWN_POSITION)
         );
     }
-    public void moveBallToShooter(){
-        shooterTransferServo.setPosition(SHOOTER_POSITION);
-    }
     public void storeBall(){
         storageTransferServo.setPosition(STORAGE_POSITION);
     }
@@ -45,8 +42,16 @@ public class Transfer extends QQMechanism{
         shooterTransferServo.setPosition((SHOOTER_DOWN_POSITION));
     }
 
-    public void storageDown(){
-        storageTransferServo.setPosition((STORAGE_DOWN_POSITION));
+    public void moveToShooter(){
+        shooterTransferServo.setPosition(SHOOTER_POSITION);
+        storageTransferServo.setPosition(STORAGE_DOWN_POSITION);
+    }
+    public void moveToStorage(){
+        storageTransferServo.setPosition(.4);
+    }
+
+    public void shooterServoUp(){
+        shooterTransferServo.setPosition(1);
     }
 
     public void resetBothDown(){

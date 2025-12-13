@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -68,7 +70,16 @@ public class Camera extends QQMechanism {
         }
         return lastKnownDistance;
     }
-    public void telemetryAprilTag(Telemetry telemetry) {
+    public boolean canSeeAprilTag(){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void telemetryAprilTag(Telemetry telemetry){
 
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());

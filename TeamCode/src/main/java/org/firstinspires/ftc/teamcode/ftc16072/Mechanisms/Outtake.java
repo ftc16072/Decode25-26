@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -36,12 +37,13 @@ public class Outtake extends QQMechanism {
     @Override
     public void init(HardwareMap hardwareMap) {
         outtakeMotor = hardwareMap.get(DcMotorEx.class, "outtake_motor");
+        outtakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         limitSwitch = hardwareMap.get(TouchSensor.class, "outtake_switch");
 
         hoodServo = hardwareMap.get(Servo.class, "hood_servo");
 
-        hoodServo.scaleRange(MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
+        hoodServo.scaleRange(MAX_HOOD_SERVO_POSITION,MIN_HOOD_SERVO_POSITION);
         hoodServo.setDirection(Servo.Direction.REVERSE);
 
 
@@ -94,7 +96,7 @@ public class Outtake extends QQMechanism {
         }
         double servoPosiition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
 
-
+        telemetry.addData("angle", angleDegrees);
         hoodServo.setPosition(servoPosiition);
         return angleDegrees;
     }

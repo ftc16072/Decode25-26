@@ -90,7 +90,7 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.controlHub.resetImu();
             }
             angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
-            telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
+            telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
         }
 
 

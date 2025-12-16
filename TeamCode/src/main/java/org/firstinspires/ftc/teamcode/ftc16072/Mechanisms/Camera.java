@@ -82,19 +82,21 @@ public class Camera extends QQMechanism {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-
+                if((detection.id != 21)&&(detection.id != 22)&&(detection.id != 23)) {
                     return detection.robotPose.getPosition().x;
-
+                }
             }
         }return 0;
     }
 
-    public double getPosYInches(){
+    public double getPosYInches() {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                if ((detection.id != 21) && (detection.id != 22) && (detection.id != 23)) {
                     return detection.robotPose.getPosition().y;
 
+                }
             }
         }return 0;
     }
@@ -103,8 +105,9 @@ public class Camera extends QQMechanism {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                if((detection.id != 21)&&(detection.id != 22)&&(detection.id != 23)) {
                     return detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
-
+                }
             }
         }return 0;
     }

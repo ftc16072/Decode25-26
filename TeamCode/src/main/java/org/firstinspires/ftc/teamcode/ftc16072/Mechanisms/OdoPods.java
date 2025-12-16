@@ -10,7 +10,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOdo;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,8 +27,18 @@ public class OdoPods extends QQMechanism{
         pinpoint.update();
         return pinpoint.getPosition();
     }
+
     public void setPose(Pose2D newPose){
         pinpoint.setPosition(newPose);
+    }
+    public double getXInches(){
+        return pinpoint.getPosX(DistanceUnit.INCH);
+    }
+    public double getYInches(){
+        return pinpoint.getPosY(DistanceUnit.INCH);
+    }
+    public double getHeadingDegrees(){
+        return pinpoint.getHeading(AngleUnit.DEGREES);
     }
 
     public void resetPose(double Posx, double Posy, double Heading){

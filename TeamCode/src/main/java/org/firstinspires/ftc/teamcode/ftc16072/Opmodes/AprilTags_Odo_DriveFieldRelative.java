@@ -28,7 +28,9 @@ public class AprilTags_Odo_DriveFieldRelative extends QQOpmode{
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
-        telemetry.addData("Odo Pod Pos", robot.odoPods.getPose());
+        telemetry.addData("X", robot.odoPods.getXInches());
+        telemetry.addData("Y", robot.odoPods.getYInches());
+        telemetry.addData("H",robot.odoPods.getHeadingDegrees());
         robot.camera.telemetryAprilTag(telemetry);
         if(robot.camera.isAprilTagVisible()){
             telemetry.addLine("OdoPod Reset");

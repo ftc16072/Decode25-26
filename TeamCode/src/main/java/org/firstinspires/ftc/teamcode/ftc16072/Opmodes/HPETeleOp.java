@@ -53,15 +53,19 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                     gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
                 }
             }else{
-                gamepad1.stopRumble();
+               gamepad1.stopRumble();
                 robot.transfer.storeBall();
                 robot.transfer.shooterDown();
             }
             if(gamepad1.a){
                 robot.transfer.shooterServoUp();
             }
-            if(gamepad1.x){
-                robot.transfer.moveToStorage();
+            if(gamepad1.xWasPressed()) {
+                robot.transfer.moveToStorage(telemetry);
+
+            }
+            if(gamepad1.yWasPressed() && gamepad1.bWasPressed())    {
+                robot.transfer.storageDown();
             }
             /*(if((gamepad1.y)){
                 robot.intake.intake();

@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
@@ -26,12 +25,12 @@ public class Outtake extends QQMechanism {
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
-    final double MIN_HOOD_SERVO_POSITION = 0.5;
+    final double MIN_HOOD_SERVO_POSITION = 0.70;
     final double MAX_HOOD_SERVO_POSITION = .35;
     final double HOOD_POSITION = 0;
 
 
-    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 0;
+    final double SHOOTING_SPEED_TICKS_PER_SECOND = 1700;
     int ballsShot;
     boolean wasLimitSwitchPressed;
 
@@ -60,13 +59,13 @@ public class Outtake extends QQMechanism {
 
         return Arrays.asList(
                 new TestMotor("OuttakeMotor", outtakeMotor, TEST_SPEED),
-                new TestServo("HoodServo", hoodServo, 1.0, 0), //fix numbers,
+                new TestServo("HoodServo", hoodServo, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION),
                 new TestTouchSensor("outtakeSwitch", limitSwitch)
         );
     }
 
     public void spinUp() {
-        outtakeMotor.setVelocity(SHOOTING_SPEED_DEGREES_PER_SECOND);
+        outtakeMotor.setVelocity(SHOOTING_SPEED_TICKS_PER_SECOND);
     }
 
     public void stop() {
@@ -74,9 +73,9 @@ public class Outtake extends QQMechanism {
     }
 
     public boolean isReady(Telemetry telemetry) {
-        telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_DEGREES_PER_SECOND);
+        telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_TICKS_PER_SECOND);
 
-        return (outtakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_DEGREES_PER_SECOND));
+        return (outtakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_TICKS_PER_SECOND));
     }
 
     /**
@@ -96,10 +95,10 @@ public class Outtake extends QQMechanism {
             angleDegrees = MAX_DEGREES;
             telemetry.addData("angle change to", angleDegrees);
         }
-        double servoPosiition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, MIN_HOOD_SERVO_POSITION, MAX_HOOD_SERVO_POSITION);
+        double servoPosition = Range.scale(angleDegrees, MIN_DEGREES, MAX_DEGREES, 0, 1);
 
         telemetry.addData("angle", angleDegrees);
-        hoodServo.setPosition(servoPosiition);
+        hoodServo.setPosition(servoPosition);
         return angleDegrees;
     }
 

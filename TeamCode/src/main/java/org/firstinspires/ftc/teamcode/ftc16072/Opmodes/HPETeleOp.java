@@ -6,67 +6,72 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
+
 @TeleOp
-    public class HPETeleOp extends QQOpmode {
-        public static final double TRIGGER_THRESHOLD = 0.5;
-        public double angleDegrees = 35;
-        public boolean isRed = true;
-        public void init_loop(){
-            super.init_loop();
-            if(gamepad1.x){
-                isRed = false;
-            }else if(gamepad1.b){
-                isRed = true;
-            }
-            telemetry.addData("Alliance", isRed ? "Red" : "Blue");
+public class HPETeleOp extends QQOpmode {
+    public static final double TRIGGER_THRESHOLD = 0.5;
+    public double angleDegrees = 35;
+    public boolean isRed = true;
 
+    public void init_loop() {
+        super.init_loop();
+        if (gamepad1.x) {
+            isRed = false;
+        } else if (gamepad1.b) {
+            isRed = true;
         }
+        telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
-        @Override
-        public void loop() {
-            super.loop();
-            if((gamepad1.right_trigger > TRIGGER_THRESHOLD)) {
-                robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
-            }
-            else if((gamepad1.right_bumper)){
-                robot.mecanumDrive.setSpeed(MecanumDrive.Speed.SLOW);
-            }
-            else {
-                robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
-            }
-                telemetry.addData("Alliance", isRed ? "Red" : "Blue");
-                double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
-                telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
+    }
+    @Override
+    public void start(){
+        super.start();
+        robot.transfer.resetBothDown();
+    }
 
-                double turnSpeed = calculateTurn(bearingToTargetDegrees);
-                if(!gamepad1.left_bumper){
-                    turnSpeed = gamepad1.right_stick_x;
-                }
-                nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
-                telemetry.addData("Turn Speed", turnSpeed);
+    @Override
+    public void loop() {
+        super.loop();
+        if ((gamepad1.right_trigger > TRIGGER_THRESHOLD)) {
+            robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
+        } else if ((gamepad1.right_bumper)) {
+            robot.mecanumDrive.setSpeed(MecanumDrive.Speed.SLOW);
+        } else {
+            robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
+        }
+        telemetry.addData("Alliance", isRed ? "Red" : "Blue");
+        double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
+        telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
+
+        double turnSpeed = calculateTurn(bearingToTargetDegrees);
+        if (!gamepad1.left_bumper) {
+            turnSpeed = gamepad1.right_stick_x;
+        }
+        nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
+        telemetry.addData("Turn Speed", turnSpeed);
 
 
-            if (gamepad1.b){
-                if  (robot.outtake.isReady(telemetry)){
-                    robot.transfer.moveToShooter();
-                }else{
-                    gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
-                }
-            }else{
-               gamepad1.stopRumble();
-                robot.transfer.storeBall();
-                robot.transfer.shooterDown();
+        if (gamepad1.x){
+            robot.transfer.storageDown();
+        }
+        if (gamepad1.b) {
+            if (robot.outtake.isReady(telemetry)) {
+                robot.transfer.moveToShooter();
+            } else {
+                gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
             }
-            if(gamepad1.a){
-                robot.transfer.shooterServoUp();
-            }
-            if(gamepad1.xWasPressed()) {
-                robot.transfer.moveToStorage(telemetry);
-
-            }
-            if(gamepad1.yWasPressed() && gamepad1.bWasPressed())    {
-                robot.transfer.storageDown();
-            }
+        } else {
+            gamepad1.stopRumble();
+            robot.transfer.storeBall();
+            robot.transfer.shooterDown();
+        }
+ //       if (gamepad1.xWasPressed()) {
+ //           robot.transfer.moveToStorage(telemetry);
+ //
+ //       }
+        if (gamepad1.yWasPressed() && gamepad1.bWasPressed()) {
+            robot.transfer.storageDown();
+        }
             /*(if((gamepad1.y)){
                 robot.intake.intake();
             }
@@ -77,35 +82,35 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
                 robot.intake.stop();
             */
 
-            if((gamepad1.left_trigger > TRIGGER_THRESHOLD)){
-                robot.outtake.spinUp();
-            }
-            else if((gamepad1.right_stick_button)){
-                robot.outtake.stop();
-            }
-
-            if (gamepad1.dpadUpWasPressed()){
-                angleDegrees += 5;
-            }
-            else if(gamepad1.dpadDownWasPressed()){
-                angleDegrees -= 5;
-            }
-            if(gamepad1.y) {
-                robot.controlHub.resetImu();
-            }
-            angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
-            telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
+        if ((gamepad1.left_trigger > TRIGGER_THRESHOLD)) {
+            telemetry.addData("Spin up", "true");
+            robot.outtake.spinUp();
+        } else if ((gamepad1.right_stick_button)) {
+            robot.outtake.stop();
         }
 
+        if (gamepad1.dpadUpWasPressed()) {
+            angleDegrees += 2;
+        } else if (gamepad1.dpadDownWasPressed()) {
+            angleDegrees -= 2;
+        }
+        if (gamepad1.y) {
+            robot.controlHub.resetImu();
+        }
+        angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
+        telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
+    }
 
-        private double lastError = 0;
-        private double sumErrors = 0;
-        ElapsedTime timer = new ElapsedTime();
-        private double calculateTurn(double bearingDegrees){
-            double KP = 0.02;
-            double KI = 0;
-            double KD = 0.005;
-            double maxSpeed = 0.75;
+
+    private double lastError = 0;
+    private double sumErrors = 0;
+    ElapsedTime timer = new ElapsedTime();
+
+    private double calculateTurn(double bearingDegrees) {
+        double KP = 0.02;
+        double KI = 0;
+        double KD = 0.005;
+        double maxSpeed = 0.75;
 /*
         if (bearingDegrees < -30){
             return -0.5;
@@ -115,20 +120,20 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
         }
 */
 
-            double error = bearingDegrees - 0;
-            double derivative = (error - lastError) / timer.seconds();
-            double speed = (KP * error) + (KD * derivative);
-            if(Math.abs(speed) > maxSpeed){
-                speed = maxSpeed * Math.signum(speed);
-            }
-            if(Math.abs(bearingDegrees) < 3){
-                speed = 0;
-            }
-            lastError = error;
-            return speed;
+        double error = bearingDegrees - 0;
+        double derivative = (error - lastError) / timer.seconds();
+        double speed = (KP * error) + (KD * derivative);
+        if (Math.abs(speed) > maxSpeed) {
+            speed = maxSpeed * Math.signum(speed);
         }
-
+        if (Math.abs(bearingDegrees) < 3) {
+            speed = 0;
+        }
+        lastError = error;
+        return speed;
     }
+
+}
 
 
 

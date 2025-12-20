@@ -14,13 +14,12 @@ import java.util.List;
 
 public class Transfer extends QQMechanism{
     public static final double STORAGE_UP_POSITION = .4;
-    // REMEMBER THE POSITIONS FOR THE STORAGE SERVO, THE LEFT ONE ARE INVERSE
-    double SHOOTER_POSITION = 0.6; //need to figure out position
-    double STORAGE_POSITION = 0.67; //need to figure out position
+    double SHOOTER_POSITION = 0.8;
+    double STORAGE_DOWN_POSITION = 0.50;
     //0.7
     //0.55
     double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
-    double STORAGE_DOWN_POSITION = 0.525; //need to figure out position
+    double STORAGE_POSITION = 0.75;  // was 0.525
     double STORAGE_ANGLE_POSITION = 0.68;
     double SHOOTER_ANGLE_POSITION=0.53;
 
@@ -90,10 +89,6 @@ public class Transfer extends QQMechanism{
     public void update(Telemetry telemetry){
         super.update(telemetry);
         telemetry.addData("should move to holding cell", shouldMoveToHoldingCell);
-    }
-
-    public void shooterServoUp(){
-        shooterTransferServo.setPosition(1);
     }
 
     public void resetBothDown(){

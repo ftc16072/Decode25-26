@@ -31,7 +31,7 @@ public class Outtake extends QQMechanism {
     final double HOOD_POSITION = 0;
 
 
-    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 1800;
+    final double SHOOTING_SPEED_DEGREES_PER_SECOND = 0;
     int ballsShot;
     boolean wasLimitSwitchPressed;
 

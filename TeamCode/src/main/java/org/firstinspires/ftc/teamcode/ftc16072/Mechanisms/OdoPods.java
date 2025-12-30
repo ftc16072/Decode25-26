@@ -57,5 +57,9 @@ public class OdoPods extends QQMechanism{
         pinpoint.resetPosAndIMU();
         isInitialized = true;
     }
+    public double turnToGoal(boolean isRed, double x, double y){
+        if (isRed){ return Math.toDegrees(Math.atan2((144-y),(144-x)));}
+        else{ return Math.toDegrees(Math.atan2((144-y),(0-x)));}
+    }
 
 }

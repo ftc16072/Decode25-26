@@ -32,7 +32,7 @@ public class Constants {
 
 
     public static MecanumConstants driveConstants = new MecanumConstants()
-            .maxPower(0.75)
+            .maxPower(0.6)
             .leftFrontMotorName("front_left_motor")
             .leftRearMotorName("back_left_motor")
             .rightFrontMotorName("front_right_motor")
@@ -72,6 +72,7 @@ public class Constants {
                 .pinpointLocalizer(localizerConstants)
                 .pathConstraints(pathConstraints)
                 .build();
+        follower.setMaxPower(driveConstants.getMaxPower());
         follower.updateConstants();
         return follower;
     }

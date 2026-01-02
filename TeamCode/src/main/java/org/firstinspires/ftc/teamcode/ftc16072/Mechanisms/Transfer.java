@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
-import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,9 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Transfer extends QQMechanism{
-    public static final double STORAGE_UP_POSITION = .4;
-    double SHOOTER_POSITION = 0.8;
-    double STORAGE_DOWN_POSITION = 0.50;
+    public static final double STORAGE_UP_POSITION = .5;
+    double SHOOTER_POSITION = 0.65;
+    double STORAGE_DOWN_POSITION = 0.7;
     //0.7
     //0.55
     double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
@@ -60,7 +59,7 @@ public class Transfer extends QQMechanism{
 
     public void moveToShooter(){
         shooterTransferServo.setPosition(SHOOTER_POSITION);
-        storageTransferServo.setPosition(STORAGE_DOWN_POSITION);
+        storageTransferServo.setPosition(STORAGE_UP_POSITION);
     }
 //    public void moveSmallAngle(){
 //        shooterTransferServo.setPosition(SHOOTER_ANGLE_POSITION);

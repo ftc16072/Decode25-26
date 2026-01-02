@@ -24,6 +24,10 @@ public class ScoreAuto extends QQOpmode {
     public PathChain Pickup2PostoPickedup2Pos;
     public PathChain Pickedup2PostoPickup2Pos;
     public PathChain Pickup2PostoShootPos;
+    public PathChain ShootPostoPickup3Pos;
+    public PathChain Pickup3PostoPickedup3Pos;
+    public PathChain Pickedup3PostoPickup3Pos;
+    public PathChain Pickup3PostoShootPos;
     public PathChain ShootPostoParkPos;
     public boolean isRed = true;
 
@@ -43,6 +47,12 @@ public class ScoreAuto extends QQOpmode {
         PICKUP2_TO_SHOOT,
         SHOOT_FIRST_BALL3,
         SHOOT_SECOND_BALL3,
+        SHOOT_TO_PICKUP3,
+        PICKUP3_TO_PICKEDUP3,
+        PICKEDUP3_TO_PICKUP3,
+        PICKUP3_TO_SHOOT,
+        SHOOT_FIRST_BALL4,
+        SHOOT_SECOND_BALL4,
         SHOOT_TO_PARK,
         DONE
 
@@ -142,6 +152,39 @@ public void start() {
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(70))
                 .build();
+
+        ShootPostoPickup3Pos = follower
+                .pathBuilder()
+                .addPath(
+                        new BezierLine(new Pose(84.000, 18.000), new Pose(104.000, 87.000))
+                )
+                .setTangentHeadingInterpolation()
+                .build();
+
+        Pickup3PostoPickedup3Pos = follower
+                .pathBuilder()
+                .addPath(
+                        new BezierLine(new Pose(104.000, 87.000), new Pose(130.000, 87.000))
+                )
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
+
+        Pickedup3PostoPickup3Pos = follower
+                .pathBuilder()
+                .addPath(
+                        new BezierLine(new Pose(130.000, 87.000), new Pose(104.000, 87.000))
+                )
+                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .build();
+
+        Pickup3PostoShootPos = follower
+                .pathBuilder()
+                .addPath(
+                        new BezierLine(new Pose(104.000, 87.000), new Pose(84.000, 18.000))
+                )
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(70))
+                .build();
+
         ShootPostoParkPos = follower
                 .pathBuilder()
                 .addPath(
@@ -226,6 +269,7 @@ public void loop() {
         case SHOOT_FIRST_BALL1:
         case SHOOT_FIRST_BALL2:
         case SHOOT_FIRST_BALL3:
+        case SHOOT_FIRST_BALL4:
             if (!follower.isBusy() && robot.outtake.isReady(telemetry)) {
 
                 if(stepTimer.seconds()<1) {
@@ -237,8 +281,11 @@ public void loop() {
                         nextStep(Step.SHOOT_SECOND_BALL1);
                     else if (currentStep == Step.SHOOT_FIRST_BALL2)
                         nextStep(Step.SHOOT_SECOND_BALL2);
+                    else if (currentStep == Step.SHOOT_FIRST_BALL3)
+                        nextStep(Step.SHOOT_SECOND_BALL3);
                     else
-                        nextStep(Step.SHOOT_SECOND_BALL3);}
+                        nextStep(Step.SHOOT_SECOND_BALL4);
+                }
             }else {
                 stepTimer.reset();
             }
@@ -247,15 +294,19 @@ public void loop() {
         case SHOOT_SECOND_BALL1:
         case SHOOT_SECOND_BALL2:
         case SHOOT_SECOND_BALL3:
+        case SHOOT_SECOND_BALL4:
             if (robot.outtake.isReady(telemetry)) {
                 if(stepTimer.seconds()<1){robot.transfer.moveToShooter();}
-                else{
+                else {
                     if (currentStep == Step.SHOOT_SECOND_BALL1)
                         nextStep(Step.SHOOT_TO_PICKUP1);
                     else if (currentStep == Step.SHOOT_SECOND_BALL2)
                         nextStep(Step.SHOOT_TO_PICKUP2);
+                    else if (currentStep == Step.SHOOT_SECOND_BALL3)
+                        nextStep(Step.SHOOT_TO_PICKUP3);
                     else
-                        nextStep(Step.SHOOT_TO_PARK);}
+                        nextStep(Step.SHOOT_TO_PARK);
+                }
             }else {
                 stepTimer.reset();
             }
@@ -313,6 +364,30 @@ public void loop() {
             if (!follower.isBusy()) {
                 follower.followPath(Pickup2PostoShootPos, true);
                 nextStep(Step.SHOOT_FIRST_BALL3);
+            }
+            break;
+        case SHOOT_TO_PICKUP3:
+            if (!follower.isBusy()) {
+                follower.followPath(ShootPostoPickup3Pos);
+                robot.transfer.resetBothDown();
+                nextStep(Step.PICKUP3_TO_PICKEDUP3);
+            }
+            break;
+        case PICKUP3_TO_PICKEDUP3:
+            if (!follower.isBusy()) {
+                follower.followPath(Pickup3PostoPickedup3Pos);
+                nextStep(Step.PICKEDUP3_TO_PICKUP3);
+            }
+            break;
+        case PICKEDUP3_TO_PICKUP3:
+            if (!follower.isBusy()) {
+                follower.followPath(Pickedup3PostoPickup3Pos);
+                nextStep(Step.PICKUP3_TO_SHOOT);}
+            break;
+        case PICKUP3_TO_SHOOT:
+            if (!follower.isBusy()) {
+                follower.followPath(Pickup3PostoShootPos, true);
+                nextStep(Step.SHOOT_FIRST_BALL4);
             }
             break;
         case SHOOT_TO_PARK:

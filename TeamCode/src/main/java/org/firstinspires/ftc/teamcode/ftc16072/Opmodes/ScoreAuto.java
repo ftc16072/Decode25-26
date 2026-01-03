@@ -212,7 +212,7 @@ public void start() {
                 .addPath(
                         new BezierLine(
                                 new Pose(60.000, 18.000),
-                                new Pose(40.000, 35.000)
+                                new Pose(40.000, 28.000)
                         )
                 )
                 .setTangentHeadingInterpolation()
@@ -221,7 +221,7 @@ public void start() {
         Pickup1PostoPickedup1Pos = follower
                 .pathBuilder()
                 .addPath(
-                        new BezierLine(new Pose(40.000, 35.000), new Pose(14.000, 35.000))
+                        new BezierLine(new Pose(40.000, 28.000), new Pose(14.000, 28.000))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
@@ -229,7 +229,7 @@ public void start() {
         Pickedup1PostoPickup1Pos = follower
                 .pathBuilder()
                 .addPath(
-                        new BezierLine(new Pose(14.000, 35.000), new Pose(40.000, 35.000))
+                        new BezierLine(new Pose(14.000, 28.000), new Pose(40.000, 28.000))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
@@ -237,7 +237,7 @@ public void start() {
         Pickup1PostoShootPos = follower
                 .pathBuilder()
                 .addPath(
-                        new BezierLine(new Pose(40.000, 35.000), new Pose(60.000, 18.000))
+                        new BezierLine(new Pose(40.000, 28.000), new Pose(60.000, 18.000))
                 )
                 .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
@@ -306,7 +306,7 @@ public void loop() {
                     if (currentStep == Step.SHOOT_SECOND_BALL1)
                         nextStep(Step.SHOOT_TO_PICKUP1);
                     else if (currentStep == Step.SHOOT_SECOND_BALL2)
-                        nextStep(Step.SHOOT_TO_PICKUP2);
+                        nextStep(Step.SHOOT_TO_PARK);
                     else if (currentStep == Step.SHOOT_SECOND_BALL3)
                         nextStep(Step.SHOOT_TO_PICKUP3);
                     else
@@ -344,57 +344,57 @@ public void loop() {
                 nextStep(Step.SHOOT_FIRST_BALL2);
             }
             break;
-        case SHOOT_TO_PICKUP2:
-            if (!follower.isBusy()) {
-                follower.followPath(ShootPostoPickup2Pos);
-                robot.transfer.resetBothDown();
-                nextStep(Step.PICKUP2_TO_PICKEDUP2);
-            }
-            break;
-
-        case PICKUP2_TO_PICKEDUP2:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickup2PostoPickedup2Pos);
-                nextStep(Step.PICKEDUP2_TO_PICKUP2);
-            }
-            break;
-        case PICKEDUP2_TO_PICKUP2:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickedup2PostoPickup2Pos);
-                nextStep(Step.PICKUP2_TO_SHOOT);
-            }
-            break;
-
-        case PICKUP2_TO_SHOOT:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickup2PostoShootPos, true);
-                nextStep(Step.SHOOT_FIRST_BALL3);
-            }
-            break;
-        case SHOOT_TO_PICKUP3:
-            if (!follower.isBusy()) {
-                follower.followPath(ShootPostoPickup3Pos);
-                robot.transfer.resetBothDown();
-                nextStep(Step.PICKUP3_TO_PICKEDUP3);
-            }
-            break;
-        case PICKUP3_TO_PICKEDUP3:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickup3PostoPickedup3Pos);
-                nextStep(Step.PICKEDUP3_TO_PICKUP3);
-            }
-            break;
-        case PICKEDUP3_TO_PICKUP3:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickedup3PostoPickup3Pos);
-                nextStep(Step.PICKUP3_TO_SHOOT);}
-            break;
-        case PICKUP3_TO_SHOOT:
-            if (!follower.isBusy()) {
-                follower.followPath(Pickup3PostoShootPos, true);
-                nextStep(Step.SHOOT_FIRST_BALL4);
-            }
-            break;
+//        case SHOOT_TO_PICKUP2:
+//            if (!follower.isBusy()) {
+//                follower.followPath(ShootPostoPickup2Pos);
+//                robot.transfer.resetBothDown();
+//                nextStep(Step.PICKUP2_TO_PICKEDUP2);
+//            }
+//            break;
+//
+//        case PICKUP2_TO_PICKEDUP2:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickup2PostoPickedup2Pos);
+//                nextStep(Step.PICKEDUP2_TO_PICKUP2);
+//            }
+//            break;
+//        case PICKEDUP2_TO_PICKUP2:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickedup2PostoPickup2Pos);
+//                nextStep(Step.PICKUP2_TO_SHOOT);
+//            }
+//            break;
+//
+//        case PICKUP2_TO_SHOOT:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickup2PostoShootPos, true);
+//                nextStep(Step.SHOOT_FIRST_BALL3);
+//            }
+//            break;
+//        case SHOOT_TO_PICKUP3:
+//            if (!follower.isBusy()) {
+//                follower.followPath(ShootPostoPickup3Pos);
+//                robot.transfer.resetBothDown();
+//                nextStep(Step.PICKUP3_TO_PICKEDUP3);
+//            }
+//            break;
+//        case PICKUP3_TO_PICKEDUP3:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickup3PostoPickedup3Pos);
+//                nextStep(Step.PICKEDUP3_TO_PICKUP3);
+//            }
+//            break;
+//        case PICKEDUP3_TO_PICKUP3:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickedup3PostoPickup3Pos);
+//                nextStep(Step.PICKUP3_TO_SHOOT);}
+//            break;
+//        case PICKUP3_TO_SHOOT:
+//            if (!follower.isBusy()) {
+//                follower.followPath(Pickup3PostoShootPos, true);
+//                nextStep(Step.SHOOT_FIRST_BALL4);
+//            }
+//            break;
         case SHOOT_TO_PARK:
             if (!follower.isBusy() && robot.outtake.isReady(telemetry)) {
                 follower.followPath(ShootPostoParkPos, true);

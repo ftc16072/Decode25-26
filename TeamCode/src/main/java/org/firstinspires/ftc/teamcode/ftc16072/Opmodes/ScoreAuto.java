@@ -8,6 +8,9 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 
@@ -78,6 +81,7 @@ public class ScoreAuto extends QQOpmode {
 public void start() {
     super.start();
     if (isRed) {
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 88, 8, AngleUnit.DEGREES, 90));
         follower.setStartingPose(new Pose(88, 8, Math.toRadians(90)));
         StarttoShootPos = follower
                 .pathBuilder()
@@ -119,7 +123,7 @@ public void start() {
                                 new Pose(84.000, 18.000)
                         )
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(robot.odoPods.turnToGoal(isRed, 84, 18)))
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
         ShootPostoPickup2Pos = follower
                 .pathBuilder()
@@ -150,7 +154,7 @@ public void start() {
                 .addPath(
                         new BezierLine(new Pose(104.000, 64.000), new Pose(84.000, 18.000))
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(70))
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
 
         ShootPostoPickup3Pos = follower
@@ -182,7 +186,7 @@ public void start() {
                 .addPath(
                         new BezierLine(new Pose(104.000, 87.000), new Pose(84.000, 18.000))
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(70))
+                .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
 
         ShootPostoParkPos = follower
@@ -193,13 +197,14 @@ public void start() {
                 .setConstantHeadingInterpolation(Math.toRadians(90))
                 .build();
     } else {
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 56, 8, AngleUnit.DEGREES, 90));
         follower.setStartingPose(new Pose(56, 8, Math.toRadians(90)));
         StarttoShootPos = follower
                 .pathBuilder()
                 .addPath(
                         new BezierLine(new Pose(56.000, 8.000), new Pose(60.000, 18.000))
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(robot.odoPods.turnToGoal(isRed, 60, 18)))
+                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
 
         ShootPostoPickup1Pos = follower
@@ -234,7 +239,7 @@ public void start() {
                 .addPath(
                         new BezierLine(new Pose(40.000, 35.000), new Pose(60.000, 18.000))
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(robot.odoPods.turnToGoal(isRed, 60, 18)))
+                .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH))))
                 .build();
 
         ShootPostoParkPos = follower

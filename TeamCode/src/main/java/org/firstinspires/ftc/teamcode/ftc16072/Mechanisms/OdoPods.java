@@ -40,12 +40,6 @@ public class OdoPods extends QQMechanism{
     public double getHeadingDegrees(){
         return pinpoint.getHeading(AngleUnit.DEGREES);
     }
-
-    public void resetPose(double Posx, double Posy, double Heading){
-        pinpoint.setPosX(Posx, DistanceUnit.INCH);
-        pinpoint.setPosY(Posy, DistanceUnit.INCH);
-        pinpoint.setHeading(Heading, AngleUnit.DEGREES);
-    }
     @Override
     public List<QQTest> getTests() {
         return Collections.singletonList(

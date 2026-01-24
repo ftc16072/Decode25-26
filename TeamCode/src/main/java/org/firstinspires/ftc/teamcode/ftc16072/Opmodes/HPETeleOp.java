@@ -23,8 +23,9 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
     }
+
     @Override
-    public void start(){
+    public void start() {
         super.start();
         robot.transfer.resetBothDown();
     }
@@ -51,7 +52,7 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Turn Speed", turnSpeed);
 
 
-        if (gamepad1.x){
+        if (gamepad1.x) {
             robot.transfer.storageDown();
         }
         if (gamepad1.b) {
@@ -65,10 +66,10 @@ public class HPETeleOp extends QQOpmode {
             robot.transfer.storeBall();
             robot.transfer.shooterDown();
         }
- //       if (gamepad1.xWasPressed()) {
- //           robot.transfer.moveToStorage(telemetry);
- //
- //       }
+        //       if (gamepad1.xWasPressed()) {
+        //           robot.transfer.moveToStorage(telemetry);
+        //
+        //       }
         if (gamepad1.yWasPressed() && gamepad1.bWasPressed()) {
             robot.transfer.storageDown();
         }
@@ -89,23 +90,22 @@ public class HPETeleOp extends QQOpmode {
             robot.outtake.stop();
         }
 
-            if (gamepad1.dpadUpWasPressed()){
-                angleDegrees += 5;
-            }
-            else if(gamepad1.dpadDownWasPressed()){
-                angleDegrees -= 5;
-            }
-            if(gamepad1.y) {
-                robot.controlHub.resetImu();
-            }
-            angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES,telemetry);
-            telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
+        if (gamepad1.dpadUpWasPressed()) {
+            angleDegrees += 5;
+        } else if (gamepad1.dpadDownWasPressed()) {
+            angleDegrees -= 5;
         }
         if (gamepad1.y) {
             robot.controlHub.resetImu();
         }
         angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
-        telemetry.addData("Can See AprilTag", robot.camera.canSeeAprilTag());
+        telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
+
+        if (gamepad1.y) {
+            robot.controlHub.resetImu();
+        }
+        angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
+        telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
     }
 
 

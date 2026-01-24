@@ -9,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOdo;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class OdoPods extends QQMechanism{
         pinpoint.update();
         return pinpoint.getPosition();
     }
-
     public void setPose(Pose2D newPose){
         pinpoint.setPosition(newPose);
     }
@@ -50,6 +48,7 @@ public class OdoPods extends QQMechanism{
     public void update(Telemetry telemetry) {
         pinpoint.update();
     }
+
     private void configurePinpoint(){
         /*
          *  Set the odometry pod positions relative to the point that you want the position to be measured from.
@@ -66,6 +65,16 @@ public class OdoPods extends QQMechanism{
                 GoBildaPinpointDriver.EncoderDirection.FORWARD);
         pinpoint.resetPosAndIMU();
         isInitialized = true;
+    }
+    public double turnToGoal(boolean isRed, double x, double y){
+        if (isRed){ return Math.toDegrees(Math.atan2((144-y),(138-x)));}
+        else{ return Math.toDegrees(Math.atan2((144-y),(6-x)));}
+    }public double changeHoodAngle(boolean isRed, double x, double y){
+        double distance;
+        double constant = 1;
+        if(isRed){distance = Math.sqrt((144-y)*(144-y)+(138-x)*(138-x));}
+        else {distance = Math.sqrt((144-y)*(144-y)+(6-x)*(6-x));}
+        return distance * constant;
     }
 
 }

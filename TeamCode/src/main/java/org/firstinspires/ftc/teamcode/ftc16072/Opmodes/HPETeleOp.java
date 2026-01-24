@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
@@ -23,15 +25,22 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
     }
-
     @Override
-    public void start() {
+    public void start(){
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         super.start();
         robot.transfer.resetBothDown();
     }
 
     @Override
     public void loop() {
+        if(robot.camera.isAprilTagVisible()){
+            telemetry.addLine("OdoPod Reset");
+            telemetry.addData("AprilTag X", robot.camera.getPosXInches());
+            telemetry.addData("AprilTag Y", robot.camera.getPosYInches());
+            telemetry.addData("AprilTag H", robot.camera.getHeadingDegrees());
+            robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, robot.camera.getPosXInches(), robot.camera.getPosYInches(), AngleUnit.DEGREES, robot.camera.getHeadingDegrees()));
+        }
         super.loop();
         if ((gamepad1.right_trigger > TRIGGER_THRESHOLD)) {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
@@ -41,18 +50,23 @@ public class HPETeleOp extends QQOpmode {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
         }
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
-        double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
-        telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
+        telemetry.addData("Target Angle", robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
 
-        double turnSpeed = calculateTurn(bearingToTargetDegrees);
+        double turnSpeed = calculateTurn(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
         if (!gamepad1.left_bumper) {
             turnSpeed = gamepad1.right_stick_x;
+            if (gamepad1.dpadUpWasPressed()) {
+                angleDegrees += 2;
+            } else if (gamepad1.dpadDownWasPressed()) {
+                angleDegrees -= 2;
+            }
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
+        robot.outtake.angleDegrees = robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
 
-        if (gamepad1.x) {
+        if (gamepad1.x){
             robot.transfer.storageDown();
         }
         if (gamepad1.b) {
@@ -90,22 +104,17 @@ public class HPETeleOp extends QQOpmode {
             robot.outtake.stop();
         }
 
-        if (gamepad1.dpadUpWasPressed()) {
-            angleDegrees += 5;
-        } else if (gamepad1.dpadDownWasPressed()) {
-            angleDegrees -= 5;
-        }
-        if (gamepad1.y) {
-            robot.controlHub.resetImu();
-        }
-        angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
-        telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
 
         if (gamepad1.y) {
             robot.controlHub.resetImu();
         }
         angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
+        telemetry.addData("Hood Target Angle", robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry));
         telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
+
+        if (gamepad1.y) {
+            robot.controlHub.resetImu();
+        }
     }
 
 
@@ -127,7 +136,7 @@ public class HPETeleOp extends QQOpmode {
         }
 */
 
-        double error = bearingDegrees - 0;
+        double error = bearingDegrees - robot.odoPods.getPose().getHeading(AngleUnit.DEGREES);
         double derivative = (error - lastError) / timer.seconds();
         double speed = (KP * error) + (KD * derivative);
         if (Math.abs(speed) > maxSpeed) {

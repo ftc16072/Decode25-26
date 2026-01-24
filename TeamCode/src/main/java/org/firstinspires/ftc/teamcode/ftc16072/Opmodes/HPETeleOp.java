@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -35,6 +34,13 @@ public class HPETeleOp extends QQOpmode {
 
     @Override
     public void loop() {
+        if(robot.camera.isAprilTagVisible()){
+            telemetry.addLine("OdoPod Reset");
+            telemetry.addData("AprilTag X", robot.camera.getPosXInches());
+            telemetry.addData("AprilTag Y", robot.camera.getPosYInches());
+            telemetry.addData("AprilTag H", robot.camera.getHeadingDegrees());
+            robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, robot.camera.getPosXInches(), robot.camera.getPosYInches(), AngleUnit.DEGREES, robot.camera.getHeadingDegrees()));
+        }
         super.loop();
         if ((gamepad1.right_trigger > TRIGGER_THRESHOLD)) {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.TURBO);
@@ -44,8 +50,7 @@ public class HPETeleOp extends QQOpmode {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
         }
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
-        double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
-        telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
+        telemetry.addData("Target Angle", robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
 
         double turnSpeed = calculateTurn(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
         if (!gamepad1.left_bumper) {
@@ -104,13 +109,12 @@ public class HPETeleOp extends QQOpmode {
             robot.controlHub.resetImu();
         }
         angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
+        telemetry.addData("Hood Target Angle", robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry));
         telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
 
         if (gamepad1.y) {
             robot.controlHub.resetImu();
         }
-        angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
-        telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
     }
 
 

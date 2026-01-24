@@ -3,8 +3,12 @@ package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
 @TeleOp
-public class AprilTagsDriveFieldRelative extends QQOpmode{
+public class AprilTags_Odo_DriveFieldRelative extends QQOpmode{
     public boolean isRed = true;
     public void init_loop(){
         super.init_loop();
@@ -28,6 +32,15 @@ public class AprilTagsDriveFieldRelative extends QQOpmode{
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
+        telemetry.addData("Pose2D:",robot.odoPods.getPose());
+        robot.camera.telemetryAprilTag(telemetry);
+        if(robot.camera.isAprilTagVisible()){
+            telemetry.addLine("OdoPod Reset");
+            telemetry.addData("AprilTag X", robot.camera.getPosXInches());
+            telemetry.addData("AprilTag Y", robot.camera.getPosYInches());
+            telemetry.addData("AprilTag H", robot.camera.getHeadingDegrees());
+            robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, robot.camera.getPosXInches(), robot.camera.getPosYInches(), AngleUnit.DEGREES, robot.camera.getHeadingDegrees()));
+        }
     }
 
 

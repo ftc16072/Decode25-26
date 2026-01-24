@@ -4,12 +4,13 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestOdo;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class OdoPods extends QQMechanism{
@@ -26,12 +27,22 @@ public class OdoPods extends QQMechanism{
         pinpoint.update();
         return pinpoint.getPosition();
     }
+
     public void setPose(Pose2D newPose){
         pinpoint.setPosition(newPose);
     }
+    public double getXInches(){
+        return pinpoint.getPosX(DistanceUnit.INCH);
+    }
+    public double getYInches(){
+        return pinpoint.getPosY(DistanceUnit.INCH);
+    }
+    public double getHeadingDegrees(){
+        return pinpoint.getHeading(AngleUnit.DEGREES);
+    }
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new TestOdo("odoPods", pinpoint)
 
         );
@@ -39,7 +50,6 @@ public class OdoPods extends QQMechanism{
     public void update(Telemetry telemetry) {
         pinpoint.update();
     }
-
     private void configurePinpoint(){
         /*
          *  Set the odometry pod positions relative to the point that you want the position to be measured from.

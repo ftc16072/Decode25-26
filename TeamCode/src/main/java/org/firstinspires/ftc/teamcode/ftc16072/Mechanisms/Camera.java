@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -21,8 +20,8 @@ import java.util.List;
 
 public class Camera extends QQMechanism {
     private AprilTagProcessor aprilTagProcessor;
-    private final Position cameraPosition = new Position(DistanceUnit.INCH, 3, 6, 8, 0);
-    private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 75, 180, 0);
+    private final Position cameraPosition = new Position(DistanceUnit.INCH, 3.75, 4.75, 8, 0);
+    private final YawPitchRollAngles cameraOrientation = new YawPitchRollAngles(AngleUnit.DEGREES, 0, 70, 180, 0);
     private double lastKnownBearing = 180;
     private double lastKnownDistance = 36;
     VisionPortal visionPortal;
@@ -70,16 +69,52 @@ public class Camera extends QQMechanism {
         }
         return lastKnownDistance;
     }
-    public boolean canSeeAprilTag(){
+    public boolean isAprilTagVisible() {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                return true;
+                if((detection.id != 21)&&(detection.id != 22)&&(detection.id != 23)) {
+                    return true;
+                }
             }
-        }
-        return false;
+        }return false;
     }
-    public void telemetryAprilTag(Telemetry telemetry){
+    public double getPosXInches(){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if((detection.id != 21)&&(detection.id != 22)&&(detection.id != 23)) {
+                    return detection.robotPose.getPosition().x;
+                }
+            }
+        }return 0;
+    }
+
+    public double getPosYInches() {
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((detection.id != 21) && (detection.id != 22) && (detection.id != 23)) {
+                    return detection.robotPose.getPosition().y;
+
+                }
+            }
+        }return 0;
+    }
+
+    public double getHeadingDegrees(){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if((detection.id != 21)&&(detection.id != 22)&&(detection.id != 23)) {
+                    return detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
+                }
+            }
+        }return 0;
+    }
+
+
+    public void telemetryAprilTag(Telemetry telemetry) {
 
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
@@ -102,5 +137,6 @@ public class Camera extends QQMechanism {
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
         telemetry.addLine("RBE = Range, Bearing & Elevation");
     }
+
 
     }

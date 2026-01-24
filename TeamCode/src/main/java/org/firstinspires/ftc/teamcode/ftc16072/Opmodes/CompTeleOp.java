@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
@@ -25,6 +23,7 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
     }
+
     @Override
     public void start(){
         robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
@@ -65,11 +64,14 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Turn Speed", turnSpeed);
         robot.outtake.angleDegrees = robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
+        if (gamepad1.a) {
+            robot.transfer.storeBall();
+        }
 
-        if (gamepad1.x){
+        if (gamepad1.x) {
             robot.transfer.storageDown();
         }
-        if (gamepad1.b) {
+        if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
             if (robot.outtake.isReady(telemetry)) {
                 robot.transfer.moveToShooter();
             } else {
@@ -80,24 +82,13 @@ public class HPETeleOp extends QQOpmode {
             robot.transfer.storeBall();
             robot.transfer.shooterDown();
         }
- //       if (gamepad1.xWasPressed()) {
- //           robot.transfer.moveToStorage(telemetry);
- //
- //       }
-        if (gamepad1.y) {
-            robot.transfer.storageDown();
-        }
-            /*(if((gamepad1.y)){
-                robot.intake.intake();
-            }
-            else if((gamepad1.x)){
-                robot.intake.eject();
-            }
-            else {
-                robot.intake.stop();
-            */
+        //       if (gamepad1.xWasPressed()) {
+        //           robot.transfer.moveToStorage(telemetry);
+        //
+        //       }
 
-        if ((gamepad1.left_trigger > TRIGGER_THRESHOLD)) {
+
+        if ((gamepad1.left_stick_button)) {
             telemetry.addData("Spin up", "true");
             robot.outtake.spinUp();
         } else if ((gamepad1.right_stick_button)) {
@@ -113,8 +104,17 @@ public class HPETeleOp extends QQOpmode {
         telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
 
         if (gamepad1.y) {
-            robot.controlHub.resetImu();
+            robot.intake.intake();
+        } else {
+            robot.intake.stop();
         }
+
+        if (gamepad1.b) {
+            robot.intake.eject();
+        } else {
+            robot.intake.stop();
+        }
+
     }
 
 

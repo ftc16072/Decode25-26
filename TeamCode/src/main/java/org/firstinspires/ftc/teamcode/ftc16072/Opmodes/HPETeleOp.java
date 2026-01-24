@@ -66,11 +66,11 @@ public class HPETeleOp extends QQOpmode {
             robot.transfer.storeBall();
             robot.transfer.shooterDown();
         }
-        //       if (gamepad1.xWasPressed()) {
-        //           robot.transfer.moveToStorage(telemetry);
-        //
-        //       }
-        if (gamepad1.yWasPressed() && gamepad1.bWasPressed()) {
+ //       if (gamepad1.xWasPressed()) {
+ //           robot.transfer.moveToStorage(telemetry);
+ //
+ //       }
+        if (gamepad1.y) {
             robot.transfer.storageDown();
         }
             /*(if((gamepad1.y)){

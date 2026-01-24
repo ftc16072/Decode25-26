@@ -59,6 +59,12 @@ public class OdoPods extends QQMechanism{
     public double turnToGoal(boolean isRed, double x, double y){
         if (isRed){ return Math.toDegrees(Math.atan2((144-y),(138-x)));}
         else{ return Math.toDegrees(Math.atan2((144-y),(6-x)));}
+    }public double changeHoodAngle(boolean isRed, double x, double y){
+        double distance;
+        double constant = 1;
+        if(isRed){distance = Math.sqrt((144-y)*(144-y)+(138-x)*(138-x));}
+        else {distance = Math.sqrt((144-y)*(144-y)+(6-x)*(6-x));}
+        return distance * constant;
     }
 
 }

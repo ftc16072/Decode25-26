@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
@@ -25,6 +28,7 @@ public class HPETeleOp extends QQOpmode {
     }
     @Override
     public void start(){
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         super.start();
         robot.transfer.resetBothDown();
     }
@@ -40,15 +44,19 @@ public class HPETeleOp extends QQOpmode {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
         }
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
-        double bearingToTargetDegrees = robot.camera.getBearingToTargetDegrees(isRed);
-        telemetry.addData("Bearing Degrees", bearingToTargetDegrees);
 
-        double turnSpeed = calculateTurn(bearingToTargetDegrees);
+        double turnSpeed = calculateTurn(robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
         if (!gamepad1.left_bumper) {
             turnSpeed = gamepad1.right_stick_x;
+            if (gamepad1.dpadUpWasPressed()) {
+                angleDegrees += 2;
+            } else if (gamepad1.dpadDownWasPressed()) {
+                angleDegrees -= 2;
+            }
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
+        robot.outtake.angleDegrees = robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
 
         if (gamepad1.x){
@@ -89,11 +97,7 @@ public class HPETeleOp extends QQOpmode {
             robot.outtake.stop();
         }
 
-        if (gamepad1.dpadUpWasPressed()) {
-            angleDegrees += 2;
-        } else if (gamepad1.dpadDownWasPressed()) {
-            angleDegrees -= 2;
-        }
+
         if (gamepad1.y) {
             robot.controlHub.resetImu();
         }
@@ -120,7 +124,7 @@ public class HPETeleOp extends QQOpmode {
         }
 */
 
-        double error = bearingDegrees - 0;
+        double error = bearingDegrees - robot.odoPods.getPose().getHeading(AngleUnit.DEGREES);
         double derivative = (error - lastError) / timer.seconds();
         double speed = (KP * error) + (KD * derivative);
         if (Math.abs(speed) > maxSpeed) {

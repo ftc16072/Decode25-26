@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
-public class HPETeleOp extends QQOpmode {
+public class CompTeleOp extends QQOpmode {
     public static final double TRIGGER_THRESHOLD = 0.5;
     public double angleDegrees = 35;
     public boolean isRed = true;
@@ -51,11 +51,14 @@ public class HPETeleOp extends QQOpmode {
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
 
+        if (gamepad1.a) {
+            robot.transfer.storeBall();
+        }
 
         if (gamepad1.x) {
             robot.transfer.storageDown();
         }
-        if (gamepad1.b) {
+        if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
             if (robot.outtake.isReady(telemetry)) {
                 robot.transfer.moveToShooter();
             } else {
@@ -66,24 +69,13 @@ public class HPETeleOp extends QQOpmode {
             robot.transfer.storeBall();
             robot.transfer.shooterDown();
         }
- //       if (gamepad1.xWasPressed()) {
- //           robot.transfer.moveToStorage(telemetry);
- //
- //       }
-        if (gamepad1.y) {
-            robot.transfer.storageDown();
-        }
-            /*(if((gamepad1.y)){
-                robot.intake.intake();
-            }
-            else if((gamepad1.x)){
-                robot.intake.eject();
-            }
-            else {
-                robot.intake.stop();
-            */
+        //       if (gamepad1.xWasPressed()) {
+        //           robot.transfer.moveToStorage(telemetry);
+        //
+        //       }
 
-        if ((gamepad1.left_trigger > TRIGGER_THRESHOLD)) {
+
+        if ((gamepad1.left_stick_button)) {
             telemetry.addData("Spin up", "true");
             robot.outtake.spinUp();
         } else if ((gamepad1.right_stick_button)) {
@@ -95,17 +87,25 @@ public class HPETeleOp extends QQOpmode {
         } else if (gamepad1.dpadDownWasPressed()) {
             angleDegrees -= 5;
         }
-        if (gamepad1.y) {
+
+        if (gamepad1.y && gamepad1.start) {
             robot.controlHub.resetImu();
         }
         angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
         telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
 
         if (gamepad1.y) {
-            robot.controlHub.resetImu();
+            robot.intake.intake();
+        } else {
+            robot.intake.stop();
         }
-        angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
-        telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
+
+        if (gamepad1.b) {
+            robot.intake.eject();
+        } else {
+            robot.intake.stop();
+        }
+
     }
 
 

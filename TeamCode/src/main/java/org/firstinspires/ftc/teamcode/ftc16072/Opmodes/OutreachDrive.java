@@ -9,7 +9,7 @@ public class OutreachDrive  extends QQOpmode{
     public static final double TRIGGER_THRESHOLD = 0.5;
     public void loop(){
         super.loop();
-        nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        robot.mecanumDrive.move(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
         if ((gamepad1.left_trigger > TRIGGER_THRESHOLD) &&
                 (gamepad1.right_trigger > TRIGGER_THRESHOLD)) {

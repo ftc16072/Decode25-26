@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
-import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,11 +10,10 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 
 import java.util.Arrays;
 import java.util.List;
-@Config
 public class Transfer extends QQMechanism{
     public static double STORAGE_UP_POSITION = .4;
     public static double SHOOTER_POSITION = 0.8;
-    public static double STORAGE_DOWN_POSITION = 0.5;
+    public static double STORAGE_DOWN_POSITION = 0.55;
     //0.7
     //0.55
     public static double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position

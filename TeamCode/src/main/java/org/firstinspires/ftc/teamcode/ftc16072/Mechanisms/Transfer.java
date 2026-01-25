@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,13 +13,14 @@ import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestServo;
 import java.util.Arrays;
 import java.util.List;
 
+@Configurable
 public class Transfer extends QQMechanism{
     public static double STORAGE_UP_POSITION = .4;
-    public static double SHOOTER_POSITION = 0.8;
-    public static double STORAGE_DOWN_POSITION = 0.55;
+    public static double SHOOTER_POSITION = 0.4;
+    public static double STORAGE_DOWN_POSITION = 0.7;
     //0.7
     //0.55
-    public static double SHOOTER_DOWN_POSITION = 0.55; //need to figure out position
+    public static double SHOOTER_DOWN_POSITION = 0.2;
     public static double STORAGE_POSITION = 0.35;  // was 0.525
     public static double STORAGE_ANGLE_POSITION = 0.68;
     public static double SHOOTER_ANGLE_POSITION=0.53;
@@ -100,6 +102,17 @@ public class Transfer extends QQMechanism{
         storageTransferServo.setPosition(STORAGE_POSITION);
     }
 
-
+    public void setPosition(boolean shooter, boolean storage){
+        if (shooter){
+            shooterTransferServo.setPosition(SHOOTER_POSITION);
+        }else {
+            shooterTransferServo.setPosition(SHOOTER_DOWN_POSITION);
+        }
+        if (storage){
+            storageTransferServo.setPosition(STORAGE_UP_POSITION);
+        }else {
+            storageTransferServo.setPosition(STORAGE_DOWN_POSITION);
+        }
+    }
 }
 

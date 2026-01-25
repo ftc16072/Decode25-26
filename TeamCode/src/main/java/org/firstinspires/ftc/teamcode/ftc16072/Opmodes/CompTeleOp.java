@@ -14,6 +14,8 @@ public class CompTeleOp extends QQOpmode {
     public static final double TRIGGER_THRESHOLD = 0.5;
     public double angleDegrees = 35;
     public boolean isRed = true;
+    boolean storageUp;
+    boolean shooterUp;
 
     public void init_loop() {
         super.init_loop();
@@ -30,7 +32,9 @@ public class CompTeleOp extends QQOpmode {
     public void start(){
         robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         super.start();
-        robot.transfer.resetBothDown();
+        shooterUp=false;
+        storageUp=false;
+        robot.transfer.setPosition(shooterUp,storageUp);
     }
 
     @Override
@@ -66,30 +70,22 @@ public class CompTeleOp extends QQOpmode {
         telemetry.addData("Turn Speed", turnSpeed);
         robot.outtake.angleDegrees = robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
-        if (gamepad1.a) {
-            robot.transfer.storeBall();
+        if (gamepad1.triangle) {
+            storageUp=true;
         }
-
-        if (gamepad1.x) {
-            robot.transfer.storageDown();
+        if (gamepad1.cross) {
+            storageUp=false;
         }
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
             if (robot.outtake.isReady(telemetry)) {
-                robot.transfer.moveToShooter();
+                shooterUp=true;
             } else {
                 gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
             }
         } else {
             gamepad1.stopRumble();
-            robot.transfer.storeBall();
-            robot.transfer.shooterDown();
+            shooterUp=false;
         }
-        //       if (gamepad1.xWasPressed()) {
-        //           robot.transfer.moveToStorage(telemetry);
-        //
-        //       }
-
-
         if ((gamepad1.left_stick_button)) {
             telemetry.addData("Spin up", "true");
             robot.outtake.spinUp();
@@ -98,24 +94,22 @@ public class CompTeleOp extends QQOpmode {
         }
 
 
-        if (gamepad1.y) {
+        if (gamepad1.right_stick_button) {
             robot.controlHub.resetImu();
         }
         angleDegrees = robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry);
         telemetry.addData("Hood Target Angle", robot.outtake.setAngle(angleDegrees, AngleUnit.DEGREES, telemetry));
         telemetry.addData("Can See AprilTag", robot.camera.isAprilTagVisible());
 
-        if (gamepad1.y) {
+        if (gamepad1.square) {
             robot.intake.intake();
-        } else {
+        } else if (gamepad1.circle) {
+            robot.intake.eject();
+        }else {
             robot.intake.stop();
         }
 
-        if (gamepad1.b) {
-            robot.intake.eject();
-        } else {
-            robot.intake.stop();
-        }
+        robot.transfer.setPosition(shooterUp,storageUp);
 
     }
 

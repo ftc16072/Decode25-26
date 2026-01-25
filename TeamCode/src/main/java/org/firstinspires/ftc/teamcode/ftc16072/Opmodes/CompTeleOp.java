@@ -5,10 +5,12 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 
 @TeleOp
-public class HPETeleOp extends QQOpmode {
+public class CompTeleOp extends QQOpmode {
     public static final double TRIGGER_THRESHOLD = 0.5;
     public double angleDegrees = 35;
     public boolean isRed = true;

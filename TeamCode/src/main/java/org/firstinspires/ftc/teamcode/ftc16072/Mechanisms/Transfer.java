@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configurable
 public class Transfer extends QQMechanism{
-    public static double STORAGE_UP_POSITION = .4;
+    public static double STORAGE_UP_POSITION = 0.4;
     public static double SHOOTER_UP_POSITION = 0.4;
     public static double STORAGE_DOWN_POSITION = 0.75;
     public static double SHOOTER_DOWN_POSITION = 0.24;
@@ -58,36 +58,65 @@ public class Transfer extends QQMechanism{
         shooterTransferServo.setPosition(SHOOTER_UP_POSITION);
     }
 
-    String storageStep = "MOVING_TO_FLAT";
+    String IntoStorageStep = "MOVING_TO_FLAT";
     public void moveIntoStorage(){
-        switch(storageStep){
+        switch(IntoStorageStep){
             case "MOVING_TO_FLAT":
                 // 1. Move shooter to flat
                 shooterTransferServo.setPosition(SHOOTER_FLAT_POSITION);
                 elapsedTime.reset();
-                storageStep = "WAIT_FOR_BALL_TO_ROLL";
+                IntoStorageStep = "WAIT_FOR_BALL_TO_ROLL";
                 break;
             case "WAIT_FOR_BALL_TO_ROLL":
                 // 2. 5 ms later, move storage up
                 if (elapsedTime.milliseconds() > 200){
                     storageTransferServo.setPosition(STORAGE_UP_POSITION);
                     elapsedTime.reset();
-                    storageStep = "WAIT_FOR_STORAGE";
+                    IntoStorageStep = "WAIT_FOR_STORAGE";
                 }
                 break;
             case "WAIT_FOR_STORAGE":
             // 3. 5 ms later, move shooter back to down
                 if(elapsedTime.milliseconds() > 100){
                     shooterTransferServo.setPosition(SHOOTER_DOWN_POSITION);
-                    storageStep = "DONE";
+                    IntoStorageStep = "DONE";
                 }
                 break;
             case "DONE":
-                if (storageTransferServo.getPosition() == STORAGE_DOWN_POSITION){
-                    storageStep = "MOVING_TO_FLAT";
+                if (Math.abs(storageTransferServo.getPosition() - STORAGE_DOWN_POSITION) < 0.1){
+                    IntoStorageStep = "MOVING_TO_FLAT";
                 }
         }
     }
+
+    String outOfStorageStep = "MOVING_TO_FLAT";
+
+    // 1.storage moves down (x)
+    // 2. Shooter servo moves flat
+    // 3. ball rolls (wait), move shooter back to normal
+    public void moveOutOfStorage() {
+        switch (outOfStorageStep) {
+            case "MOVING_TO_FLAT":
+                shooterTransferServo.setPosition(SHOOTER_FLAT_POSITION);
+                storageTransferServo.setPosition(STORAGE_DOWN_POSITION);
+                 elapsedTime.reset();
+                 outOfStorageStep = "WAIT_FOR_STORAGE";
+                 break;
+            case "WAIT_FOR_STORAGE":
+                 if (elapsedTime.milliseconds() > 1_000){
+                     shooterTransferServo.setPosition(SHOOTER_DOWN_POSITION);
+                     outOfStorageStep = "DONE";
+                 }
+                 break;
+            case "DONE":
+                if (Math.abs(storageTransferServo.getPosition() - STORAGE_UP_POSITION) < 0.1){
+                    outOfStorageStep = "MOVING_TO_FLAT";
+                }
+                break;
+
+        }
+    }
+
 
     public void update(Telemetry telemetry){
         super.update(telemetry);
@@ -114,7 +143,7 @@ public class Transfer extends QQMechanism{
                 shooterTransferServo.setPosition(SHOOTER_DOWN_POSITION);
             }
         }else {
-            storageTransferServo.setPosition(STORAGE_DOWN_POSITION);
+            moveOutOfStorage();
             if(!shooter){
                 shooterTransferServo.setPosition(SHOOTER_DOWN_POSITION);
             }

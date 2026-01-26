@@ -30,7 +30,7 @@ public class CompTeleOp extends QQOpmode {
 
     @Override
     public void start(){
-        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
         super.start();
         shooterUp=false;
         storageUp=false;

@@ -14,16 +14,16 @@ public class CompTeleOp extends QQOpmode {
     public static final double TRIGGER_THRESHOLD = 0.5;
     public double angleDegrees = 35;
     public boolean isRed = true;
+
     boolean storageUp;
     boolean shooterUp;
 
     public void init_loop() {
         super.init_loop();
-        if (gamepad1.x) {
-            isRed = false;
-        } else if (gamepad1.b) {
-            isRed = true;
-        }
+
+    isRed = robot.numberPlateSensor.redAlliance();
+
+
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
 
     }
@@ -54,6 +54,10 @@ public class CompTeleOp extends QQOpmode {
         } else {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
         }
+
+
+
+
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
         telemetry.addData("Target Angle", robot.odoPods.turnToGoal(isRed, robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH)));
 

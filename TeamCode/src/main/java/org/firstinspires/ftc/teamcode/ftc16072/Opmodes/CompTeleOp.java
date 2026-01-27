@@ -143,7 +143,7 @@ public class CompTeleOp extends QQOpmode {
 */
 
 
-        double error = bearingDegrees - 0;
+        double error = bearingDegrees + 3;
         double derivative = (error - lastError) / timer.seconds();
         timer.reset();
         double speed = (KP * error) + (KD * derivative);

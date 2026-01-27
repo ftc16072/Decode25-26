@@ -132,7 +132,7 @@ public class CompTeleOp extends QQOpmode {
         double KP = 0.02;
         double KI = 0;
         double KD = 0.005;
-        double maxSpeed = 0.50;  //0.75
+        double maxSpeed = 0.25;  //0.75
 /*
         if (bearingDegrees < -30){
             return -0.5;

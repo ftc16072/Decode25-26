@@ -69,6 +69,17 @@ public class Camera extends QQMechanism {
         }
         return lastKnownDistance;
     }
+    public boolean canSeeTargetAprilTag(boolean isRed){
+        List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((isRed && detection.id == 24) || (!isRed && detection.id == 20)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public boolean isAprilTagVisible() {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {

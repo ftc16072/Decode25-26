@@ -8,10 +8,34 @@ import org.firstinspires.ftc.teamcode.ftc16072.Robot;
 public abstract class QQOpmode extends OpMode {
     public Robot robot = new Robot();
     public Navigation nav = new Navigation(robot);
+    public boolean isRed;
+    public boolean overideNumberPlate = false;
+
 
     @Override
     public void init() {
         robot.init(hardwareMap);
+    }
+
+    @Override
+    public void init_loop(){
+        if (!overideNumberPlate){
+            isRed = robot.numberPlateSensor.redAlliance();
+        }
+        if(gamepad1.x) {
+            isRed = false;
+            overideNumberPlate = true;
+        }
+        else if(gamepad1.b){
+            isRed = true;
+            overideNumberPlate = true;
+        }
+        if (overideNumberPlate) {
+            telemetry.addData("Alliance", isRed ? "NOW RED - OVERRIDE!!":"NOW BLUE - OVERRIDE!!");
+        }else{
+            telemetry.addData("Alliance", isRed ? "Red" : "Blue");
+        }
+
     }
 
     @Override

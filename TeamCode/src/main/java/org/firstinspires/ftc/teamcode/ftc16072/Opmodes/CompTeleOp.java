@@ -13,20 +13,9 @@ import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.MecanumDrive;
 public class CompTeleOp extends QQOpmode {
     public static final double TRIGGER_THRESHOLD = 0.5;
     public double angleDegrees = 35;
-    public boolean isRed = true;
 
     boolean storageUp;
     boolean shooterUp;
-
-    public void init_loop() {
-        super.init_loop();
-
-    isRed = robot.numberPlateSensor.redAlliance();
-
-
-        telemetry.addData("Alliance", isRed ? "Red" : "Blue");
-
-    }
 
     @Override
     public void start(){

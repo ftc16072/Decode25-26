@@ -113,9 +113,21 @@ public class CompTeleOp extends QQOpmode {
         }
 
         robot.transfer.setPosition(shooterUp,storageUp);
+        manipulatorLoop();
 
     }
+    public void manipulatorLoop(){
+        if (gamepad2.b) {
+            robot.outtake.stop();
+        }
+        else if (gamepad2.dpad_down) {
+            robot.outtake.spinDown();
+        }
+        else if (gamepad2.dpad_up) {
+            robot.outtake.spinUpIfStopped();
+        }
 
+    }
 
     private double lastError = 0;
     private double sumErrors = 0;

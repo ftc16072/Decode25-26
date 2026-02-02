@@ -68,6 +68,18 @@ public class Outtake extends QQMechanism {
         outtakeMotor.setVelocity(SHOOTING_SPEED_TICKS_PER_SECOND);
     }
 
+    public void spinDown() {
+        if (outtakeMotor.getVelocity() < 100) {
+            outtakeMotor.setPower(-0.2);
+        }
+    }
+
+    public void spinUpIfStopped() {
+        if (outtakeMotor.getVelocity() > -100) {
+            spinUp();
+        }
+    }
+
     public void stop() {
         outtakeMotor.setPower(0);
     }

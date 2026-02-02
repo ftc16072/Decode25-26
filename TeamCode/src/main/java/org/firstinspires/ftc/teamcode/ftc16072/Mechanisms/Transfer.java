@@ -69,7 +69,7 @@ public class Transfer extends QQMechanism{
                 break;
             case "WAIT_FOR_BALL_TO_ROLL":
                 // 2. 5 ms later, move storage up
-                if (elapsedTime.milliseconds() > 200){
+                if (elapsedTime.milliseconds() > 250){
                     storageTransferServo.setPosition(STORAGE_UP_POSITION);
                     elapsedTime.reset();
                     IntoStorageStep = "WAIT_FOR_STORAGE";

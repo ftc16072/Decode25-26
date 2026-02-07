@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.ftc16072.Opmodes;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -24,7 +23,7 @@ public class MoveAuto extends QQOpmode {
         moveForward = follower.pathBuilder()
                 .addPath(
                         // Path 1
-                        new BezierLine(new Pose(56.000, 9.000), new Pose(56.000, 30.000))
+                        new BezierLine(new Pose(56.000, 9.000), new Pose(56.000, 39.000))
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(270))
                 .build();
@@ -37,6 +36,10 @@ public class MoveAuto extends QQOpmode {
         super.loop();
         follower.update();
         telemetry.addData("Position", follower.getPose());
+        if(getRuntime() < delayTimeSeconds){
+            telemetry.addData("Time Left", delayTimeSeconds - getRuntime());
+            return;
+        }
         switch(step){
             case 0:
                 follower.followPath(moveForward);

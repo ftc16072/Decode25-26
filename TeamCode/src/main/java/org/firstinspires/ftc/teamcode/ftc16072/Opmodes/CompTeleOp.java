@@ -67,7 +67,7 @@ public class CompTeleOp extends QQOpmode {
         }
         nav.driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, turnSpeed);
         telemetry.addData("Turn Speed", turnSpeed);
-        robot.outtake.angleDegrees = robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
+        // set angle to robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
         if (gamepad1.triangle) {
             storageUp=true;

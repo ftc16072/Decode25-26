@@ -21,7 +21,7 @@ import java.util.List;
 public class Outtake extends QQMechanism {
     DcMotorEx outtakeMotor;
     Servo hoodServo;
-    public double angleDegrees;
+    private double angleDegrees;
     TouchSensor limitSwitch;
     final double TEST_SPEED = 0.2;
 
@@ -30,7 +30,7 @@ public class Outtake extends QQMechanism {
     final double HOOD_POSITION = 0;
 
 
-    final double SHOOTING_SPEED_TICKS_PER_SECOND = 1700;
+    final double SHOOTING_SPEED_TICKS_PER_SECOND = 1600;
     int ballsShot;
     boolean wasLimitSwitchPressed;
 
@@ -85,9 +85,9 @@ public class Outtake extends QQMechanism {
     }
 
     public boolean isReady(Telemetry telemetry) {
-        telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .9 * SHOOTING_SPEED_TICKS_PER_SECOND);
+        telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .95 * SHOOTING_SPEED_TICKS_PER_SECOND);
 
-        return (outtakeMotor.getVelocity() >= (.9 * SHOOTING_SPEED_TICKS_PER_SECOND));
+        return (outtakeMotor.getVelocity() >= (.95 * SHOOTING_SPEED_TICKS_PER_SECOND));
     }
 
     /**

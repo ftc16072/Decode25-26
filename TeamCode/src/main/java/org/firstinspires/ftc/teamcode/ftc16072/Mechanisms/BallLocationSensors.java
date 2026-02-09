@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072.Mechanisms;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestColorSensorV3;
 
@@ -26,5 +27,26 @@ public class BallLocationSensors extends QQMechanism{
                 new TestColorSensorV3("TransferSensor", transferSensor),
                 new TestColorSensorV3("HoldingCellSensor", holdingCellSensor)
         );
+    }
+    public boolean isBallinIntake(){
+        if(intakeSensor.getDistance(DistanceUnit.INCH) < 4){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean isBallinTransfer(){
+        if(transferSensor.getDistance(DistanceUnit.INCH) < 4){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean isBallinHoldingCell(){
+        if(holdingCellSensor.getDistance(DistanceUnit.INCH) < 2){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -85,9 +85,12 @@ public class Outtake extends QQMechanism {
     }
 
     public boolean isReady(Telemetry telemetry) {
-        telemetry.addData("Left fast enough", outtakeMotor.getVelocity() >= .95 * SHOOTING_SPEED_TICKS_PER_SECOND);
+        boolean fastEnough = outtakeMotor.getVelocity() >= .97 * SHOOTING_SPEED_TICKS_PER_SECOND;
+        boolean notTooFast = outtakeMotor.getVelocity() <= 1.03 * SHOOTING_SPEED_TICKS_PER_SECOND;
+        telemetry.addData("Speed fast enough", fastEnough);
+        telemetry.addData("Speed not too fast", notTooFast);
 
-        return (outtakeMotor.getVelocity() >= (.95 * SHOOTING_SPEED_TICKS_PER_SECOND));
+        return fastEnough && notTooFast;
     }
 
     /**

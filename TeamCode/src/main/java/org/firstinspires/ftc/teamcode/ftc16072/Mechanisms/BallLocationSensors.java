@@ -15,19 +15,19 @@ import java.util.List;
 public class BallLocationSensors extends QQMechanism{
     public ColorRangeSensor intakeSensor;
     public ColorRangeSensor transferSensor;
-    //public ColorRangeSensor holdingCellSensor;
+    public ColorRangeSensor holdingCellSensor;
 
     @Override
     public void init(HardwareMap hardwareMap) {
         intakeSensor = hardwareMap.get(ColorRangeSensor.class, "intake_sensor");
         transferSensor = hardwareMap.get(ColorRangeSensor.class, "transfer_sensor");
-        //holdingCellSensor = hardwareMap.get(ColorRangeSensor.class, "holding_cell_sensor");
+        holdingCellSensor = hardwareMap.get(ColorRangeSensor.class, "holding_cell_sensor");
     }
     public List<QQTest> getTests(){
         return Arrays.asList(
                 new TestColorSensorV2("IntakeSensor", intakeSensor),
-                new TestColorSensorV2("TransferSensor", transferSensor)
-                //new TestColorSensorV2("HoldingCellSensor", holdingCellSensor)
+                new TestColorSensorV2("TransferSensor", transferSensor),
+                new TestColorSensorV2("HoldingCellSensor", holdingCellSensor)
         );
     }
     public boolean isBallinIntake(){
@@ -44,13 +44,15 @@ public class BallLocationSensors extends QQMechanism{
             return false;
         }
     }
-    /*
+
+
+
     public boolean isBallinHoldingCell(){
-        if(holdingCellSensor.getDistance(DistanceUnit.INCH) < 2){
+        if(holdingCellSensor.getDistance(DistanceUnit.CM) < 100){
             return true;
         }else{
             return false;
         }
     }
-     */
+
 }

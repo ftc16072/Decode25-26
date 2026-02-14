@@ -48,7 +48,7 @@ public class BallLocationSensors extends QQMechanism{
 
 
     public boolean isBallinHoldingCell(){
-        if(holdingCellSensor.getDistance(DistanceUnit.CM) < 100){
+        if(holdingCellSensor.getDistance(DistanceUnit.CM) < 10){
             return true;
         }else{
             return false;

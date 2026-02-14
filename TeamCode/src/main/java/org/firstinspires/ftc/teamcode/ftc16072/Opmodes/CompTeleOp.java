@@ -75,10 +75,10 @@ public class CompTeleOp extends QQOpmode {
             storageUp = false;
         }
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
-            if (robot.ballLocationSensors.isBallinTransfer()) {
-                robot.intake.stop();
+            if (gamepad1.dpad_left || robot.ballLocationSensors.isBallinTransfer()) {
                 if (robot.outtake.isReady(telemetry)) {
                     shooterUp = true;
+                    gamepad1.stopRumble();
                 } else {
                     gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
                 }
@@ -87,7 +87,6 @@ public class CompTeleOp extends QQOpmode {
             } else if (robot.ballLocationSensors.isBallinIntake()) {
                 robot.intake.intake();
             }
-
         } else {
             gamepad1.stopRumble();
             shooterUp = false;
@@ -116,7 +115,7 @@ public class CompTeleOp extends QQOpmode {
                 robot.intake.intake();
             }
         }
-        if (gamepad1.circle) {
+        else if (gamepad1.circle) {
             robot.intake.eject();
         } else {
             robot.intake.stop();

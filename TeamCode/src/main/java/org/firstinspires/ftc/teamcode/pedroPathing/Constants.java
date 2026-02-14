@@ -43,8 +43,8 @@ public class Constants {
             .yVelocity(49.7593);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-116)
-            .strafePodX(148)
+            .forwardPodY(150)
+            .strafePodX(-150)
             .distanceUnit(DistanceUnit.MM)
             .hardwareMapName("pinpoint")
             .encoderResolution(

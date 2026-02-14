@@ -19,7 +19,8 @@ public class CompTeleOp extends QQOpmode {
 
     @Override
     public void start(){
-        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
+        //FIXME: remove line
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         super.start();
         shooterUp=false;
         storageUp=false;
@@ -28,13 +29,16 @@ public class CompTeleOp extends QQOpmode {
 
     @Override
     public void loop() {
+        telemetry.addData("X Inch", robot.odoPods.getXInches());
+        telemetry.addData("Y Inch", robot.odoPods.getYInches());
+        telemetry.addData("Heading (deg)", robot.odoPods.getHeadingDegrees());
         if(robot.camera.isAprilTagVisible()){
             telemetry.addLine("OdoPod Reset");
 //            telemetry.addData("AprilTag X", robot.camera.getPosXInches());
 //            telemetry.addData("AprilTag Y", robot.camera.getPosYInches());
 //            telemetry.addData("AprilTag H", robot.camera.getHeadingDegrees());
 //            telemetry.addData("AprilTag bearing", robot.camera.getBearingToTargetDegrees(isRed));
-            robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, robot.camera.getPosXInches(), robot.camera.getPosYInches(), AngleUnit.DEGREES, robot.camera.getHeadingDegrees()));
+            //robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, robot.camera.getPosXInches(), robot.camera.getPosYInches(), AngleUnit.DEGREES, robot.camera.getHeadingDegrees()));
         }
         super.loop();
         if ((gamepad1.right_trigger > TRIGGER_THRESHOLD)) {

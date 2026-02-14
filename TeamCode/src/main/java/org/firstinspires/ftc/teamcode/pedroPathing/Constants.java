@@ -30,7 +30,7 @@ public class Constants {
 
 
     public static MecanumConstants driveConstants = new MecanumConstants()
-            .maxPower(0.9)
+            .maxPower(0.75)
             .leftFrontMotorName("front_left_motor")
             .leftRearMotorName("back_left_motor")
             .rightFrontMotorName("front_right_motor")
@@ -43,8 +43,8 @@ public class Constants {
             .yVelocity(49.7593);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-84)
-            .strafePodX(-168)
+            .forwardPodY(150)
+            .strafePodX(-150)
             .distanceUnit(DistanceUnit.MM)
             .hardwareMapName("pinpoint")
             .encoderResolution(

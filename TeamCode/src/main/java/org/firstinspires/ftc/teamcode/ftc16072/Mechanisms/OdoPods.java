@@ -19,7 +19,7 @@ public class OdoPods extends QQMechanism{
     public void init(HardwareMap hardwareMap) {
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class,"pinpoint");
         if (!isInitialized) {
-            configurePinpoint();
+            //configurePinpoint();
         }
     }
     public Pose2D getPose(){
@@ -48,6 +48,9 @@ public class OdoPods extends QQMechanism{
     public void update(Telemetry telemetry) {
         pinpoint.update();
     }
+    public void resetPinpoint(){
+        configurePinpoint();
+    }
 
     private void configurePinpoint(){
         /*
@@ -59,12 +62,12 @@ public class OdoPods extends QQMechanism{
          *  The Y pod offset refers to how far forwards from the tracking point the Y (strafe) odometry pod is.
          *  Forward of center is a positive number, backwards is a negative number.
          */
-        pinpoint.setOffsets(-84.0, -168.0, DistanceUnit.MM); //these are tuned for 3110-0002-0001 Product Insight #1
+        pinpoint.setOffsets(150, -150.0, DistanceUnit.MM);
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD,
-                GoBildaPinpointDriver.EncoderDirection.FORWARD);
+                GoBildaPinpointDriver.EncoderDirection.REVERSED);
         pinpoint.resetPosAndIMU();
-        isInitialized = true;
+        //isInitialized = true;
     }
     public double turnToGoal(boolean isRed, double x, double y){
         if (isRed){ return Math.toDegrees(Math.atan2((144-y),(144-x)));}

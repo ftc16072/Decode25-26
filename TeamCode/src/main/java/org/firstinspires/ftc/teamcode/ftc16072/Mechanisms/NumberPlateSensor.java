@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.QQTest;
 import org.firstinspires.ftc.teamcode.ftc16072.Tests.TestColorSensorV3;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -21,7 +21,7 @@ public class NumberPlateSensor extends QQMechanism{
 
     @Override
     public List<QQTest> getTests() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new TestColorSensorV3("NumberPlateSensor",  colorSensor)
         );
     }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.ftc16072;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.BallLocationSensors;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Camera;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.ControlHub;
 import org.firstinspires.ftc.teamcode.ftc16072.Mechanisms.Intake;
@@ -25,6 +26,7 @@ public class Robot {
     public Transfer transfer = new Transfer();
     public OdoPods odoPods = new OdoPods();
     public NumberPlateSensor numberPlateSensor = new NumberPlateSensor();
+    public BallLocationSensors ballLocationSensors = new BallLocationSensors();
 
   final private List<QQMechanism> mechanisms = Arrays.asList(
             mecanumDrive,
@@ -34,7 +36,8 @@ public class Robot {
             outtake,
             transfer,
             odoPods,
-            numberPlateSensor
+            numberPlateSensor,
+            ballLocationSensors
             );
 
     public void init(HardwareMap hardwareMap) {

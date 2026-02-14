@@ -19,16 +19,17 @@ public class CompTeleOp extends QQOpmode {
 
     @Override
     public void start(){
-        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 90));
+        //FIXME: remove line
+        robot.odoPods.setPose(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));
         super.start();
-        shooterUp=false;
-        storageUp=false;
-        robot.transfer.setPosition(shooterUp,storageUp);
+        shooterUp = false;
+        storageUp = false;
+        robot.transfer.setPosition(shooterUp, storageUp);
     }
 
     @Override
     public void loop() {
-        if(robot.camera.isAprilTagVisible()){
+        if (robot.camera.isAprilTagVisible()) {
             telemetry.addLine("OdoPod Reset");
 //            telemetry.addData("AprilTag X", robot.camera.getPosXInches());
 //            telemetry.addData("AprilTag Y", robot.camera.getPosYInches());
@@ -44,8 +45,6 @@ public class CompTeleOp extends QQOpmode {
         } else {
             robot.mecanumDrive.setSpeed(MecanumDrive.Speed.FAST);
         }
-
-
 
 
         telemetry.addData("Alliance", isRed ? "Red" : "Blue");
@@ -70,21 +69,29 @@ public class CompTeleOp extends QQOpmode {
         // set angle to robot.odoPods.changeHoodAngle(isRed,  robot.odoPods.getPose().getX(DistanceUnit.INCH), robot.odoPods.getPose().getY(DistanceUnit.INCH));
 
         if (gamepad1.triangle) {
-            storageUp=true;
+            storageUp = true;
         }
         if (gamepad1.cross) {
-            storageUp=false;
+            storageUp = false;
         }
         if (gamepad1.left_trigger > TRIGGER_THRESHOLD) {
-            if (robot.outtake.isReady(telemetry)) {
-                shooterUp=true;
-            } else {
-                gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
-            }
+            //if (gamepad1.dpad_left || robot.ballLocationSensors.isBallinTransfer()) {
+                if (robot.outtake.isReady(telemetry)) {
+                    shooterUp = true;
+                    gamepad1.stopRumble();
+                } else {
+                    gamepad1.rumble(Gamepad.RUMBLE_DURATION_CONTINUOUS);
+                }
+            //} else if (robot.ballLocationSensors.isBallinHoldingCell()) {
+            //    robot.transfer.moveOutOfStorage();
+            //} else if (robot.ballLocationSensors.isBallinIntake()) {
+            //    robot.intake.intake();
+            //}
         } else {
             gamepad1.stopRumble();
-            shooterUp=false;
+            shooterUp = false;
         }
+
         if ((gamepad1.left_stick_button)) {
             telemetry.addData("Spin up", "true");
             robot.outtake.spinUp();
@@ -102,28 +109,33 @@ public class CompTeleOp extends QQOpmode {
 
 
         if (gamepad1.square) {
-            robot.intake.intake();
-        } else if (gamepad1.circle) {
+            if (robot.ballLocationSensors.isBallinTransfer() && robot.ballLocationSensors.isBallinIntake()) {
+                robot.intake.stop();
+            } else {
+                robot.intake.intake();
+            }
+        }
+        else if (gamepad1.circle) {
             robot.intake.eject();
-        }else {
+        } else {
             robot.intake.stop();
         }
-        if(gamepad1.touchpad){
+        if (gamepad1.touchpad) {
             robot.outtake.stop();
         }
 
-        robot.transfer.setPosition(shooterUp,storageUp);
+
+        robot.transfer.setPosition(shooterUp, storageUp);
         manipulatorLoop();
 
     }
-    public void manipulatorLoop(){
+
+    public void manipulatorLoop() {
         if (gamepad2.b) {
             robot.outtake.stop();
-        }
-        else if (gamepad2.dpad_down) {
+        } else if (gamepad2.dpad_down) {
             robot.outtake.spinDown();
-        }
-        else if (gamepad2.dpad_up) {
+        } else if (gamepad2.dpad_up) {
             robot.outtake.spinUpIfStopped();
         }
 
